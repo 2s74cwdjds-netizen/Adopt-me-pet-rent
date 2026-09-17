@@ -1,0 +1,4440 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#0b0b0f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Adopt Rent</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+    margin:0;
+    padding:0;
+    width:100%;
+    min-height:100%;
+    background:#0b0b0f;
+    color:#f5f5f7;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+button,
+input,
+select{
+    font:inherit;
+}
+
+button{
+    border:0;
+    cursor:pointer;
+}
+
+.app{
+    width:100%;
+    max-width:560px;
+    min-height:100vh;
+    margin:0 auto;
+    padding-bottom:92px;
+}
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:30;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 18px;
+    background:rgba(11,11,15,.94);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:11px;
+}
+
+.brand-logo{
+    width:42px;
+    height:42px;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,#746cff,#5148d8);
+    box-shadow:0 8px 25px rgba(108,99,255,.25);
+    font-size:21px;
+}
+
+.brand-text{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+}
+
+.brand-name{
+    font-size:17px;
+    font-weight:800;
+    letter-spacing:.1px;
+}
+
+.brand-subtitle{
+    color:#858590;
+    font-size:11px;
+}
+
+.online{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    padding:8px 11px;
+    border-radius:12px;
+    background:#15151c;
+    color:#bdbdc8;
+    font-size:11px;
+    white-space:nowrap;
+}
+
+.online-dot{
+    color:#55e98a;
+    font-size:10px;
+}
+
+.screen{
+    display:none;
+    padding:18px;
+}
+
+.screen.active{
+    display:block;
+}
+
+.hero{
+    position:relative;
+    overflow:hidden;
+    padding:26px 21px;
+    margin-bottom:15px;
+    border-radius:25px;
+    background:
+        radial-gradient(circle at 90% 10%,rgba(112,103,255,.25),transparent 36%),
+        linear-gradient(145deg,#171720,#111117);
+    border:1px solid rgba(255,255,255,.06);
+}
+
+.hero:after{
+    content:"";
+    position:absolute;
+    width:150px;
+    height:150px;
+    right:-60px;
+    bottom:-70px;
+    border-radius:50%;
+    background:rgba(112,103,255,.11);
+    filter:blur(4px);
+}
+
+.hero-badge{
+    position:relative;
+    z-index:2;
+    display:inline-flex;
+    align-items:center;
+    padding:7px 10px;
+    margin-bottom:15px;
+    border-radius:10px;
+    background:rgba(112,103,255,.12);
+    border:1px solid rgba(112,103,255,.2);
+    color:#aaa4ff;
+    font-size:11px;
+    font-weight:700;
+}
+
+.hero h1{
+    position:relative;
+    z-index:2;
+    margin:0 0 9px;
+    font-size:29px;
+    line-height:1.08;
+    letter-spacing:-.7px;
+}
+
+.hero p{
+    position:relative;
+    z-index:2;
+    margin:0;
+    color:#92929e;
+    line-height:1.55;
+    font-size:13px;
+    max-width:430px;
+}
+
+.hero-buttons{
+    position:relative;
+    z-index:3;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:21px;
+}
+
+.primary-btn,
+.secondary-btn{
+    min-height:49px;
+    padding:13px 15px;
+    border-radius:15px;
+    font-weight:750;
+    font-size:13px;
+    transition:.18s;
+}
+
+.primary-btn{
+    background:#7067ff;
+    color:#fff;
+    box-shadow:0 8px 24px rgba(112,103,255,.2);
+}
+
+.primary-btn:active,
+.secondary-btn:active,
+.nav-item:active,
+.choice:active{
+    transform:scale(.97);
+}
+
+.secondary-btn{
+    background:#22222c;
+    color:#f2f2f5;
+    border:1px solid rgba(255,255,255,.06);
+}
+
+.full-btn{
+    width:100%;
+}
+
+.section-title{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin:23px 2px 11px;
+}
+
+.section-title h2{
+    margin:0;
+    font-size:17px;
+}
+
+.section-title span{
+    color:#777782;
+    font-size:11px;
+}
+
+.info-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.info-card{
+    padding:15px;
+    border-radius:18px;
+    background:#15151c;
+    border:1px solid rgba(255,255,255,.05);
+}
+
+.info-icon{
+    width:35px;
+    height:35px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:11px;
+    background:#20202a;
+    margin-bottom:10px;
+}
+
+.info-card strong{
+    display:block;
+    margin-bottom:5px;
+    font-size:13px;
+}
+
+.info-card p{
+    margin:0;
+    color:#81818d;
+    line-height:1.45;
+    font-size:11px;
+}
+
+.steps{
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+}
+
+.step{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    padding:14px;
+    background:#15151c;
+    border:1px solid rgba(255,255,255,.05);
+    border-radius:17px;
+}
+
+.step-number{
+    flex:0 0 29px;
+    height:29px;
+    border-radius:9px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#282632;
+    color:#aaa4ff;
+    font-size:12px;
+    font-weight:800;
+}
+
+.step-content strong{
+    display:block;
+    font-size:13px;
+    margin-bottom:4px;
+}
+
+.step-content span{
+    color:#858590;
+    font-size:11px;
+    line-height:1.45;
+}
+
+.card{
+    padding:17px;
+    margin-bottom:11px;
+    border-radius:19px;
+    background:#15151c;
+    border:1px solid rgba(255,255,255,.055);
+}
+
+.card-title{
+    margin:0 0 5px;
+    font-size:16px;
+}
+
+.card-subtitle{
+    margin:0;
+    color:#858590;
+    font-size:12px;
+    line-height:1.5;
+}
+
+.empty{
+    padding:35px 18px;
+    text-align:center;
+    color:#777782;
+}
+
+.empty-icon{
+    font-size:32px;
+    margin-bottom:10px;
+}
+
+.application{
+    padding:16px;
+    margin-bottom:10px;
+    border-radius:18px;
+    background:#15151c;
+    border:1px solid rgba(255,255,255,.055);
+}
+
+.application-top{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+}
+
+.application-pet{
+    display:flex;
+    gap:10px;
+    align-items:center;
+    min-width:0;
+}
+
+.pet-avatar{
+    width:44px;
+    height:44px;
+    flex:0 0 44px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:13px;
+    background:#20202a;
+    font-size:22px;
+}
+
+.pet-name{
+    min-width:0;
+}
+
+.pet-name strong{
+    display:block;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    font-size:13px;
+}
+
+.pet-name span{
+    display:block;
+    margin-top:4px;
+    color:#80808b;
+    font-size:11px;
+}
+
+.status{
+    align-self:flex-start;
+    padding:6px 8px;
+    border-radius:9px;
+    font-size:9px;
+    font-weight:800;
+    white-space:nowrap;
+}
+
+.status.waiting{
+    color:#ffd66b;
+    background:rgba(255,214,107,.1);
+}
+
+.status.paid{
+    color:#65ed9b;
+    background:rgba(101,237,155,.1);
+}
+
+.status.review{
+    color:#aaa4ff;
+    background:rgba(112,103,255,.1);
+}
+
+.status.completed{
+    color:#65ed9b;
+    background:rgba(101,237,155,.1);
+}
+
+.status.cancelled{
+    color:#ff7777;
+    background:rgba(255,119,119,.1);
+}
+
+.application-details{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    margin-top:14px;
+}
+
+.detail{
+    padding:9px 10px;
+    border-radius:11px;
+    background:#101015;
+}
+
+.detail span{
+    display:block;
+    color:#70707a;
+    font-size:9px;
+    margin-bottom:3px;
+}
+
+.detail strong{
+    font-size:11px;
+}
+
+.application-payment{
+    margin-top:12px;
+}
+
+.bottom-nav{
+    position:fixed;
+    left:50%;
+    bottom:0;
+    z-index:40;
+    width:min(560px,100%);
+    transform:translateX(-50%);
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    padding:9px 8px calc(9px + env(safe-area-inset-bottom));
+    background:rgba(13,13,18,.96);
+    backdrop-filter:blur(20px);
+    border-top:1px solid rgba(255,255,255,.06);
+}
+
+.nav-item{
+    min-height:52px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:4px;
+    color:#6f6f79;
+    background:transparent;
+    border-radius:13px;
+    transition:.15s;
+}
+
+.nav-item.active{
+    color:#a59fff;
+    background:rgba(112,103,255,.09);
+}
+
+.nav-icon{
+    font-size:18px;
+    line-height:18px;
+}
+
+.nav-label{
+    font-size:9px;
+    font-weight:700;
+}
+
+.profile-head{
+    display:flex;
+    align-items:center;
+    gap:13px;
+    padding:17px;
+    margin-bottom:11px;
+    border-radius:20px;
+    background:#15151c;
+    border:1px solid rgba(255,255,255,.05);
+}
+
+.profile-avatar{
+    width:55px;
+    height:55px;
+    border-radius:17px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,#7067ff,#4e46c7);
+    font-size:23px;
+    font-weight:800;
+}
+
+.profile-info{
+    min-width:0;
+}
+
+.profile-info strong{
+    display:block;
+    font-size:16px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.profile-info span{
+    display:block;
+    margin-top:4px;
+    color:#80808b;
+    font-size:11px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+}
+
+.stat{
+    padding:14px 8px;
+    text-align:center;
+    border-radius:16px;
+    background:#15151c;
+    border:1px solid rgba(255,255,255,.05);
+}
+
+.stat strong{
+    display:block;
+    font-size:17px;
+}
+
+.stat span{
+    display:block;
+    margin-top:4px;
+    color:#777782;
+    font-size:9px;
+}
+
+.support-box{
+    text-align:center;
+    padding:27px 18px;
+    border-radius:22px;
+    background:
+        radial-gradient(circle at 50% 0,rgba(112,103,255,.16),transparent 45%),
+        #15151c;
+    border:1px solid rgba(255,255,255,.055);
+}
+
+.support-icon{
+    width:64px;
+    height:64px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0 auto 13px;
+    border-radius:20px;
+    background:#22222c;
+    font-size:28px;
+}
+
+.support-box h2{
+    margin:0 0 8px;
+    font-size:19px;
+}
+
+.support-box p{
+    margin:0 auto 18px;
+    max-width:350px;
+    color:#858590;
+    line-height:1.5;
+    font-size:12px;
+}
+
+.overlay{
+    position:fixed;
+    inset:0;
+    z-index:100;
+    display:none;
+    align-items:flex-end;
+    justify-content:center;
+    background:rgba(0,0,0,.68);
+    backdrop-filter:blur(6px);
+}
+
+.overlay.open{
+    display:flex;
+}
+
+.modal{
+    width:min(560px,100%);
+    max-height:92vh;
+    overflow-y:auto;
+    padding:18px 18px calc(22px + env(safe-area-inset-bottom));
+    border-radius:25px 25px 0 0;
+    background:#111117;
+    border-top:1px solid rgba(255,255,255,.08);
+    animation:modalUp .2s ease;
+}
+
+@keyframes modalUp{
+    from{
+        transform:translateY(25px);
+        opacity:.5;
+    }
+    to{
+        transform:translateY(0);
+        opacity:1;
+    }
+}
+
+.modal-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:15px;
+}
+
+.modal-head h2{
+    margin:0;
+    font-size:19px;
+}
+
+.close{
+    width:35px;
+    height:35px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:11px;
+    color:#a0a0aa;
+    background:#20202a;
+    font-size:18px;
+}
+
+.rules{
+    padding:15px;
+    border-radius:16px;
+    background:#17171f;
+    border:1px solid rgba(255,255,255,.05);
+}
+
+.rules h3{
+    margin:0 0 10px;
+    font-size:14px;
+}
+
+.rules p{
+    margin:0 0 8px;
+    color:#92929d;
+    line-height:1.5;
+    font-size:11px;
+}
+
+.rules p:last-child{
+    margin-bottom:0;
+}
+
+.checkbox-row{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    margin:13px 0;
+    padding:12px;
+    border-radius:14px;
+    background:#181820;
+}
+
+.checkbox-row input{
+    margin-top:2px;
+    accent-color:#7067ff;
+}
+
+.checkbox-row label{
+    color:#b0b0ba;
+    font-size:11px;
+    line-height:1.45;
+}
+
+.search{
+    width:100%;
+    height:46px;
+    padding:0 14px;
+    margin-bottom:11px;
+    outline:none;
+    color:#f5f5f7;
+    background:#181820;
+    border:1px solid rgba(255,255,255,.06);
+    border-radius:14px;
+}
+
+.search::placeholder{
+    color:#666670;
+}
+
+.pet-list{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    max-height:48vh;
+    overflow-y:auto;
+}
+
+.pet-option{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    width:100%;
+    padding:12px;
+    text-align:left;
+    color:#fff;
+    background:#181820;
+    border:1px solid rgba(255,255,255,.045);
+    border-radius:15px;
+}
+
+.pet-option:active{
+    background:#20202a;
+}
+
+.pet-option .pet-avatar{
+    width:42px;
+    height:42px;
+    flex-basis:42px;
+}
+
+.pet-option-info{
+    flex:1;
+    min-width:0;
+}
+
+.pet-option-info strong{
+    display:block;
+    font-size:12px;
+}
+
+.pet-option-info span{
+    display:block;
+    margin-top:3px;
+    color:#777782;
+    font-size:10px;
+}
+
+.pet-option-price{
+    text-align:right;
+}
+
+.pet-option-price strong{
+    display:block;
+    color:#aaa4ff;
+    font-size:11px;
+}
+
+.pet-option-price span{
+    color:#666670;
+    font-size:9px;
+}
+
+.variants{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:7px;
+    margin:13px 0;
+}
+
+.variant{
+    min-height:44px;
+    padding:7px 3px;
+    border-radius:12px;
+    color:#878792;
+    background:#1a1a22;
+    border:1px solid rgba(255,255,255,.045);
+    font-size:9px;
+    font-weight:700;
+}
+
+.variant.active{
+    color:#fff;
+    background:#7067ff;
+    border-color:#7067ff;
+}
+
+.variant.disabled{
+    opacity:.3;
+}
+
+.variant-hint{
+    margin:9px 0 12px;
+    color:#73737d;
+    font-size:10px;
+    line-height:1.4;
+}
+
+.offer-list{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    margin-top:10px;
+}
+
+.offer{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    padding:13px;
+    text-align:left;
+    color:#fff;
+    background:#181820;
+    border:1px solid rgba(255,255,255,.05);
+    border-radius:15px;
+}
+
+.offer-info strong{
+    display:block;
+    font-size:12px;
+}
+
+.offer-info span{
+    display:block;
+    margin-top:4px;
+    color:#777782;
+    font-size:10px;
+}
+
+.offer-price{
+    color:#aaa4ff;
+    font-size:13px;
+    font-weight:800;
+    white-space:nowrap;
+}
+
+.field{
+    margin-bottom:12px;
+}
+
+.field label{
+    display:block;
+    margin:0 0 6px 2px;
+    color:#90909b;
+    font-size:10px;
+    font-weight:700;
+}
+
+.field input,
+.field select{
+    width:100%;
+    height:46px;
+    padding:0 13px;
+    outline:none;
+    color:#f5f5f7;
+    background:#181820;
+    border:1px solid rgba(255,255,255,.06);
+    border-radius:13px;
+}
+
+.field input::placeholder{
+    color:#64646e;
+}
+
+.price-box{
+    padding:16px;
+    margin:12px 0;
+    border-radius:17px;
+    background:linear-gradient(145deg,#191923,#14141b);
+    border:1px solid rgba(112,103,255,.12);
+}
+
+.price-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:7px;
+}
+
+.price-row:last-child{
+    margin-bottom:0;
+}
+
+.price-row span{
+    color:#858590;
+    font-size:11px;
+}
+
+.price-row strong{
+    font-size:13px;
+}
+
+.price-total{
+    padding-top:10px;
+    margin-top:10px;
+    border-top:1px solid rgba(255,255,255,.06);
+}
+
+.price-total strong{
+    color:#aaa4ff;
+    font-size:18px;
+}
+
+.success{
+    padding:20px;
+    text-align:center;
+    border-radius:19px;
+    background:#15151c;
+    border:1px solid rgba(101,237,155,.1);
+}
+
+.success-icon{
+    width:58px;
+    height:58px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0 auto 12px;
+    border-radius:18px;
+    background:rgba(101,237,155,.09);
+    font-size:25px;
+}
+
+.success h2{
+    margin:0 0 7px;
+    font-size:18px;
+}
+
+.success p{
+    margin:0;
+    color:#858590;
+    font-size:11px;
+    line-height:1.5;
+}
+
+.payment-note{
+    padding:12px;
+    margin:12px 0;
+    border-radius:14px;
+    color:#a6a6b0;
+    background:#181820;
+    font-size:10px;
+    line-height:1.45;
+}
+
+.toast{
+    position:fixed;
+    left:50%;
+    bottom:92px;
+    z-index:200;
+    width:max-content;
+    max-width:calc(100% - 35px);
+    padding:12px 15px;
+    transform:translate(-50%,15px);
+    opacity:0;
+    pointer-events:none;
+    border-radius:13px;
+    background:#24242d;
+    border:1px solid rgba(255,255,255,.08);
+    color:#f4f4f6;
+    box-shadow:0 12px 35px rgba(0,0,0,.35);
+    font-size:11px;
+    transition:.2s;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translate(-50%,0);
+}
+
+.muted{
+    color:#777782;
+    font-size:11px;
+}
+
+@media(max-width:380px){
+    .hero-buttons{
+        grid-template-columns:1fr;
+    }
+
+    .variants{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header class="header">
+    <div class="brand">
+        <div class="brand-logo">🐾</div>
+        <div class="brand-text">
+            <div class="brand-name">Adopt Rent</div>
+            <div class="brand-subtitle">Аренда питомцев Adopt Me</div>
+        </div>
+    </div>
+
+    <div class="online">
+        <span class="online-dot">●</span>
+        <span id="onlineCount">43 онлайн</span>
+    </div>
+</header>
+
+<!-- HOME -->
+<section class="screen active" id="screen-home">
+
+    <div class="hero">
+        <div class="hero-badge">🐾 Сервис аренды питомцев</div>
+
+        <h1>Арендуй питомца<br>на 24 часа</h1>
+
+        <p>
+            Выбери нужного питомца, подходящий вариант и удобное время передачи.
+            Всё оформляется через Adopt Rent.
+        </p>
+
+        <div class="hero-buttons">
+            <button class="primary-btn" onclick="startRent()">
+                🐾 Взять питомца
+            </button>
+
+            <button class="secondary-btn" onclick="startSupply()">
+                📦 Сдать питомца
+            </button>
+        </div>
+    </div>
+
+    <div class="section-title">
+        <h2>Как это работает</h2>
+        <span>Просто</span>
+    </div>
+
+    <div class="info-grid">
+
+        <div class="info-card">
+            <div class="info-icon">🔎</div>
+            <strong>Выбери питомца</strong>
+            <p>Найди нужного питомца и выбери доступный вариант.</p>
+        </div>
+
+        <div class="info-card">
+            <div class="info-icon">⭐</div>
+            <strong>Оплати аренду</strong>
+            <p>Оплата будет проходить через Telegram Stars.</p>
+        </div>
+
+        <div class="info-card">
+            <div class="info-icon">🤝</div>
+            <strong>Получи питомца</strong>
+            <p>Передача проходит в согласованное время.</p>
+        </div>
+
+        <div class="info-card">
+            <div class="info-icon">↩️</div>
+            <strong>Верни питомца</strong>
+            <p>После окончания аренды верни питомца владельцу.</p>
+        </div>
+
+    </div>
+
+    <div class="section-title">
+        <h2>Для владельцев</h2>
+        <span>Сдать питомца</span>
+    </div>
+
+    <div class="steps">
+
+        <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+                <strong>Выбери питомца</strong>
+                <span>Укажи питомца, которого хочешь сдать в аренду.</span>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+                <strong>Укажи Roblox-аккаунт</strong>
+                <span>Для передачи используется служебный аккаунт Jaff11223.</span>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+                <strong>Дождись заявки</strong>
+                <span>После оформления заявка поступит на проверку.</span>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+                <strong>Получи выплату</strong>
+                <span>После завершения аренды выплата производится за вычетом комиссии 10%.</span>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- APPLICATIONS -->
+<section class="screen" id="screen-applications">
+
+    <div class="section-title">
+        <h2>Мои заявки</h2>
+        <span id="applicationCount">0</span>
+    </div>
+
+    <div id="applicationsList"></div>
+
+</section>
+
+<!-- SUPPORT -->
+<section class="screen" id="screen-support">
+
+    <div class="section-title">
+        <h2>Поддержка</h2>
+    </div>
+
+    <div class="support-box">
+
+        <div class="support-icon">💬</div>
+
+        <h2>Нужна помощь?</h2>
+
+        <p>
+            Если у тебя возник вопрос по аренде, передаче питомца,
+            оплате или заявке — напиши в поддержку.
+        </p>
+
+        <button class="primary-btn full-btn" onclick="openSupport()">
+            Открыть поддержку
+        </button>
+
+    </div>
+
+    <div class="card" style="margin-top:11px;">
+        <h3 class="card-title">Передача питомцев</h3>
+        <p class="card-subtitle">
+            Стандартное время передачи — с 17:30 до 18:00 по Москве.
+            Точное время согласовывается в заявке.
+        </p>
+    </div>
+
+</section>
+
+<!-- PROFILE -->
+<section class="screen" id="screen-profile">
+
+    <div class="section-title">
+        <h2>Профиль</h2>
+    </div>
+
+    <div class="profile-head">
+
+        <div class="profile-avatar" id="profileAvatar">U</div>
+
+        <div class="profile-info">
+            <strong id="profileName">Пользователь</strong>
+            <span id="profileUsername">@username</span>
+        </div>
+
+    </div>
+
+    <div class="stats">
+
+        <div class="stat">
+            <strong id="statRent">0</strong>
+            <span>Аренд</span>
+        </div>
+
+        <div class="stat">
+            <strong id="statSupply">0</strong>
+            <span>Сдано</span>
+        </div>
+
+        <div class="stat">
+            <strong id="statCompleted">0</strong>
+            <span>Завершено</span>
+        </div>
+
+    </div>
+
+    <div class="card" style="margin-top:11px;">
+        <h3 class="card-title">Ваш Telegram</h3>
+        <p class="card-subtitle" id="profileTelegram">
+            Telegram WebApp ещё не передал данные пользователя.
+        </p>
+    </div>
+
+</section>
+
+</div>
+
+<!-- NAVIGATION -->
+<nav class="bottom-nav">
+
+    <button class="nav-item active" id="nav-home" onclick="showScreen('home')">
+        <span class="nav-icon">⌂</span>
+        <span class="nav-label">Главная</span>
+    </button>
+
+    <button class="nav-item" id="nav-applications" onclick="showScreen('applications')">
+        <span class="nav-icon">📋</span>
+        <span class="nav-label">Заявки</span>
+    </button>
+
+    <button class="nav-item" id="nav-support" onclick="showScreen('support')">
+        <span class="nav-icon">💬</span>
+        <span class="nav-label">Поддержка</span>
+    </button>
+
+    <button class="nav-item" id="nav-profile" onclick="showScreen('profile')">
+        <span class="nav-icon">👤</span>
+        <span class="nav-label">Профиль</span>
+    </button>
+
+</nav>
+
+<!-- MODAL -->
+<div class="overlay" id="overlay">
+
+    <div class="modal" id="modal">
+
+        <div class="modal-head">
+            <h2 id="modalTitle">Adopt Rent</h2>
+
+            <button class="close" onclick="closeModal()">
+                ×
+            </button>
+        </div>
+
+        <div id="modalContent"></div>
+
+    </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+
+/* =========================================================
+   CONFIGURATION
+========================================================= */
+
+const CONFIG = {
+    APP_NAME:"Adopt Rent",
+    RENTAL_HOURS:24,
+    COMMISSION:10,
+    SUPPORT_BOT:"Adoptrent_support_bot",
+    SUPPLIER_ROBLOX:"Jaff11223",
+    FORM_ENDPOINT:"https://formspree.io/f/mnpqyeyl",
+    STORAGE_KEY:"adopt_rent_final_v11",
+    PROFILE_KEY:"adopt_rent_profile_final_v11",
+    HANDOVER_FROM:"17:30",
+    HANDOVER_TO:"18:00",
+    SLOT_MINUTES:5,
+    MIN_PRICE:5,
+    MAX_PRICE:2000
+};
+
+
+/* =========================================================
+   TELEGRAM
+========================================================= */
+
+const tg = window.Telegram?.WebApp || null;
+
+try{
+    tg?.ready();
+    tg?.expand();
+}catch(error){
+    console.log(error);
+}
+
+
+/* =========================================================
+   PET DATABASE
+========================================================= */
+
+const RAW_PETS = [
+
+    ["shadow_dragon","Shadow Dragon","🌑",150],
+    ["bat_dragon","Bat Dragon","🐉",140],
+    ["frost_dragon","Frost Dragon","❄️",120],
+    ["giraffe","Giraffe","🦒",110],
+    ["owl","Owl","🦉",100],
+    ["parrot","Parrot","🦜",90],
+    ["evil_unicorn","Evil Unicorn","🦄",80],
+    ["crow","Crow","🐦",75],
+    ["arctic_reindeer","Arctic Reindeer","🦌",70],
+    ["hedgehog","Hedgehog","🦔",65],
+    ["dalmatian","Dalmatian","🐶",60],
+    ["lion","Lion","🦁",55],
+    ["turtle","Turtle","🐢",50],
+    ["kangaroo","Kangaroo","🦘",48],
+    ["cow","Cow","🐄",45],
+    ["elephant","Elephant","🐘",43],
+    ["hyena","Hyena","🐾",42],
+    ["flamingo","Flamingo","🦩",40],
+    ["albino_monkey","Albino Monkey","🐒",38],
+    ["monkey_king","Monkey King","👑",37],
+    ["arctic_fox","Arctic Fox","🦊",35],
+    ["pink_cat","Pink Cat","🐱",34],
+    ["blue_dog","Blue Dog","🐶",34],
+    ["zombie_buffalo","Zombie Buffalo","🦬",33],
+    ["brown_bear","Brown Bear","🐻",32],
+    ["polar_bear","Polar Bear","🐻‍❄️",31],
+    ["reindeer","Reindeer","🦌",30],
+    ["shrew","Shrew","🐭",29],
+    ["turkey","Turkey","🦃",28],
+    ["swan","Swan","🦢",27],
+    ["llama","Llama","🦙",26],
+    ["platypus","Platypus","🦆",25],
+    ["crocodile","Crocodile","🐊",24],
+    ["rhino","Rhino","🦏",23],
+    ["puffin","Puffin","🐧",22],
+    ["goat","Goat","🐐",21],
+    ["pig","Pig","🐷",20],
+    ["horse","Horse","🐴",19],
+    ["cow_dalmatian","Brown Cow","🐄",18],
+    ["business_monkey","Business Monkey","🐒",17],
+    ["ghost_bunny","Ghost Bunny","👻",16],
+    ["frost_fury","Frost Fury","🐲",15],
+    ["lavender_dragon","Lavender Dragon","💜",14],
+    ["phoenix","Phoenix","🔥",13],
+    ["diamond_albatross","Diamond Albatross","🪽",12],
+    ["golden_albatross","Golden Albatross","🪽",11],
+    ["albatross","Albatross","🪽",10],
+    ["golden_penguin","Golden Penguin","🐧",10],
+    ["king_bee","King Bee","🐝",9],
+    ["queen_bee","Queen Bee","👑",9],
+    ["ninja_monkey","Ninja Monkey","🥷",9],
+    ["dodo","Dodo","🦤",8],
+    ["trex","T-Rex","🦖",8],
+    ["shark","Shark","🦈",8],
+    ["octopus","Octopus","🐙",8],
+    ["skeleton_trex","Skeleton T-Rex","🦖",8],
+    ["goldhorn","Goldhorn","🦌",7],
+    ["phoenix_gold","Golden Phoenix","🔥",7],
+    ["snow_owl","Snow Owl","🦉",7],
+    ["unicorn","Unicorn","🦄",7],
+    ["dragon","Dragon","🐉",7],
+    ["griffin","Griffin","🦅",6],
+    ["kitsune","Kitsune","🦊",6],
+    ["cerberus","Cerberus","🐕",6],
+    ["axolotl","Axolotl","🦎",6],
+    ["octopus_neon","Neon Octopus","🐙",6],
+    ["shark_neon","Neon Shark","🦈",6],
+    ["t_rex_neon","Neon T-Rex","🦖",6],
+    ["snowball","Snowball Pet","☃️",5],
+    ["red_panda","Red Panda","🐼",5],
+    ["shiba","Shiba Inu","🐕",5],
+    ["toucan","Toucan","🦜",5],
+    ["sloth","Sloth","🦥",5],
+    ["koala","Koala","🐨",5],
+    ["frog","Frog","🐸",5],
+    ["beaver","Beaver","🦫",5],
+    ["rabbit","Rabbit","🐰",5],
+    ["bunny","Bunny","🐇",5],
+    ["poodle","Poodle","🐩",5],
+    ["ginger_cat","Ginger Cat","🐈",5],
+    ["snow_cat","Snow Cat","🐈",5],
+    ["monkey","Monkey","🐒",5],
+    ["penguin","Penguin","🐧",5],
+    ["ladybug","Ladybug","🐞",5],
+    ["bee","Bee","🐝",5],
+    ["starfish","Starfish","⭐",5],
+    ["dolphin","Dolphin","🐬",5],
+    ["seahorse","Seahorse","🦄",5],
+    ["narwhal","Narwhal","🐋",5],
+    ["crab","Crab","🦀",5],
+    ["walrus","Walrus","🦭",5],
+    ["seal","Seal","🦭",5],
+    ["penguin_gold","Golden Penguin","🐧",5],
+    ["badger","Badger","🦡",5],
+    ["saber_tooth","Saber Tooth","🐯",5],
+    ["red_squirrel","Red Squirrel","🐿️",5],
+    ["musk_ox","Musk Ox","🐂",5],
+    ["ox","Ox","🐂",5],
+    ["wolf","Wolf","🐺",5],
+    ["corgi","Corgi","🐶",5],
+    ["spaniel","Spaniel","🐶",5],
+    ["persian_cat","Persian Cat","🐱",5],
+    ["maneki_neko","Maneki Neko","🐱",5],
+    ["robot","Robot","🤖",5],
+    ["space_whale","Space Whale","🐋",5],
+    ["lava_dragon","Lava Dragon","🐉",5],
+    ["winged_horse","Winged Horse","🐴",5],
+    ["diamond_dragon","Diamond Dragon","💎",5],
+    ["golden_dragon","Golden Dragon","🐉",5],
+    ["golden_unicorn","Golden Unicorn","🦄",5],
+    ["metal_ox","Metal Ox","🐂",5],
+    ["griffin_gold","Golden Griffin","🦅",5],
+    ["cerberus_neon","Neon Cerberus","🐕",5]
+
+];
+
+const PETS = RAW_PETS.map(item => ({
+    id:item[0],
+    name:item[1],
+    emoji:item[2],
+    value:item[3]
+}));
+
+function pet(id){
+    return PETS.find(p => p.id === id);
+}
+
+function isRentablePet(p){
+    return p && p.value >= 4;
+}
+
+function isSupplyPet(p){
+    return p && p.value > 4;
+}
+
+
+/* =========================================================
+   VARIANTS
+========================================================= */
+
+const VARIANT_MULTIPLIERS = {
+    Normal:1,
+    F:1.15,
+    R:1.15,
+    FR:1.32,
+    N:1.5,
+    NF:1.7,
+    NR:1.7,
+    NFR:1.95,
+    M:2.7,
+    MF:3.0,
+    MR:3.0,
+    MFR:3.35
+};
+
+const ANCHOR_PRICES = {
+    shadow_dragon:590,
+    bat_dragon:560,
+    frost_dragon:510,
+    giraffe:470,
+    owl:430,
+    parrot:390,
+    evil_unicorn:350,
+    crow:330,
+    arctic_reindeer:310,
+    hedgehog:290
+};
+
+function price(p,variant){
+    if(!p) return 5;
+
+    const anchor =
+        ANCHOR_PRICES[p.id] ||
+        Math.max(5,Math.round(p.value * 5.1));
+
+    const multiplier =
+        VARIANT_MULTIPLIERS[variant] || 1;
+
+    return Math.max(
+        CONFIG.MIN_PRICE,
+        Math.min(
+            CONFIG.MAX_PRICE,
+            Math.round(anchor * multiplier)
+        )
+    );
+}
+
+
+/* =========================================================
+   VARIANT HELPERS
+========================================================= */
+
+function variantHasF(v){
+    return v.includes("F");
+}
+
+function variantHasR(v){
+    return v.includes("R");
+}
+
+function variantTier(v){
+    if(v.startsWith("M")) return "M";
+    if(v.startsWith("N")) return "N";
+    return "Normal";
+}
+
+function makeVariant(tier,f,r){
+
+    if(tier === "Normal"){
+        if(f && r) return "FR";
+        if(f) return "F";
+        if(r) return "R";
+        return "Normal";
+    }
+
+    if(tier === "N"){
+        if(f && r) return "NFR";
+        if(f) return "NF";
+        if(r) return "NR";
+        return "N";
+    }
+
+    if(tier === "M"){
+        if(f && r) return "MFR";
+        if(f) return "MF";
+        if(r) return "MR";
+        return "M";
+    }
+
+    return "Normal";
+}
+
+function availableVariants(p){
+
+    const list = [
+        "Normal",
+        "F",
+        "R",
+        "FR"
+    ];
+
+    if(p.value >= 5){
+        list.push("N","NF","NR","NFR");
+    }
+
+    if(p.value >= 8){
+        list.push("M","MF","MR","MFR");
+    }
+
+    return list;
+}
+
+
+/* =========================================================
+   SELLERS / OFFERS
+========================================================= */
+
+const SELLERS = [
+    "AdoptRent",
+    "PetOwner",
+    "RentMaster",
+    "PetVault",
+    "LuckyOwner",
+    "DreamPets",
+    "RentHouse",
+    "PetMarket"
+];
+
+function hashCode(str){
+    let hash = 0;
+
+    for(let i=0;i<str.length;i++){
+        hash =
+            ((hash << 5) - hash) +
+            str.charCodeAt(i);
+
+        hash |= 0;
+    }
+
+    return Math.abs(hash);
+}
+
+function offers(petId,variant){
+
+    const p = pet(petId);
+
+    if(!p) return [];
+
+    const base = price(p,variant);
+
+    const result = [];
+
+    for(let i=0;i<4;i++){
+
+        const seller =
+            SELLERS[
+                (hashCode(
+                    petId +
+                    variant +
+                    i
+                )) % SELLERS.length
+            ];
+
+        const difference =
+            [-0.06,-0.02,0.03,0.07][i];
+
+        const offerPrice =
+            Math.max(
+                CONFIG.MIN_PRICE,
+                Math.round(base * (1 + difference))
+            );
+
+        result.push({
+            id:
+                petId +
+                "_" +
+                variant +
+                "_" +
+                i,
+
+            seller,
+            price:offerPrice
+        });
+    }
+
+    return result;
+}
+
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+function loadApplications(){
+
+    try{
+
+        const raw =
+            localStorage.getItem(
+                CONFIG.STORAGE_KEY
+            );
+
+        if(raw){
+            const data = JSON.parse(raw);
+
+            if(Array.isArray(data)){
+                return data;
+            }
+        }
+
+    }catch(error){
+        console.log(error);
+    }
+
+    return [];
+}
+
+let applications = loadApplications();
+
+function saveApplications(){
+
+    try{
+        localStorage.setItem(
+            CONFIG.STORAGE_KEY,
+            JSON.stringify(applications)
+        );
+    }catch(error){
+        console.log(error);
+    }
+
+    renderApplications();
+    renderProfile();
+}
+
+function generateId(prefix){
+
+    return (
+        prefix +
+        "_" +
+        Date.now().toString(36) +
+        "_" +
+        Math.random()
+            .toString(36)
+            .slice(2,8)
+    );
+}
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+function telegramUser(){
+
+    try{
+        return tg?.initDataUnsafe?.user || null;
+    }catch(error){
+        return null;
+    }
+}
+
+function getProfile(){
+
+    const user = telegramUser();
+
+    if(user){
+        return {
+            id:user.id || null,
+            firstName:user.first_name || "Пользователь",
+            lastName:user.last_name || "",
+            username:user.username || ""
+        };
+    }
+
+    return {
+        id:null,
+        firstName:"Пользователь",
+        lastName:"",
+        username:""
+    };
+}
+
+
+/* =========================================================
+   SCREEN NAVIGATION
+========================================================= */
+
+function showScreen(name){
+
+    document
+        .querySelectorAll(".screen")
+        .forEach(screen => {
+            screen.classList.remove("active");
+        });
+
+    const target =
+        document.getElementById(
+            "screen-" + name
+        );
+
+    if(target){
+        target.classList.add("active");
+    }
+
+    document
+        .querySelectorAll(".nav-item")
+        .forEach(item => {
+            item.classList.remove("active");
+        });
+
+    const nav =
+        document.getElementById(
+            "nav-" + name
+        );
+
+    if(nav){
+        nav.classList.add("active");
+    }
+
+    if(name === "applications"){
+        renderApplications();
+    }
+
+    if(name === "profile"){
+        renderProfile();
+    }
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+function openModal(title,html){
+
+    document.getElementById(
+        "modalTitle"
+    ).textContent = title;
+
+    document.getElementById(
+        "modalContent"
+    ).innerHTML = html;
+
+    document
+        .getElementById("overlay")
+        .classList.add("open");
+
+    document.body.style.overflow = "hidden";
+}
+
+function closeModal(){
+
+    document
+        .getElementById("overlay")
+        .classList.remove("open");
+
+    document.body.style.overflow = "";
+
+    currentRentPet = null;
+    currentRentVariant = "Normal";
+    currentRentOffer = null;
+    currentSupplyPet = null;
+    currentSupplyVariant = "Normal";
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer = null;
+
+function showToast(message){
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+    clearTimeout(toastTimer);
+
+    toastTimer =
+        setTimeout(() => {
+            toast.classList.remove("show");
+        },2800);
+}
+
+
+/* =========================================================
+   ONLINE COUNTER
+========================================================= */
+
+let online = 43;
+
+function updateOnline(){
+
+    const change =
+        Math.floor(
+            Math.random() * 7
+        ) - 3;
+
+    online += change;
+
+    if(online < 28){
+        online = 28;
+    }
+
+    if(online > 72){
+        online = 72;
+    }
+
+    document.getElementById(
+        "onlineCount"
+    ).textContent =
+        online + " онлайн";
+}
+
+function scheduleOnline(){
+
+    const delay =
+        10000 +
+        Math.floor(
+            Math.random() * 20000
+        );
+
+    setTimeout(() => {
+        updateOnline();
+        scheduleOnline();
+    },delay);
+}
+
+scheduleOnline();
+
+
+/* =========================================================
+   RULES
+========================================================= */
+
+function startRent(){
+
+    openModal(
+        "Правила аренды",
+        `
+        <div class="rules">
+
+            <h3>Перед оформлением заявки</h3>
+
+            <p>
+                • Аренда питомца оформляется на 24 часа.
+            </p>
+
+            <p>
+                • Питомец должен быть возвращён после окончания срока аренды.
+            </p>
+
+            <p>
+                • Не изменяй имя питомца и не передавай его третьим лицам.
+            </p>
+
+            <p>
+                • Передача питомца проходит в согласованное время.
+            </p>
+
+            <p>
+                • После оформления заявки стоимость указывается в Telegram Stars.
+            </p>
+
+            <p>
+                • За нарушение правил заявка может быть отменена.
+            </p>
+
+        </div>
+
+        <div class="checkbox-row">
+
+            <input
+                type="checkbox"
+                id="rentRulesAgree"
+            >
+
+            <label for="rentRulesAgree">
+                Я прочитал(а) правила аренды и согласен(на) с ними.
+            </label>
+
+        </div>
+
+        <button
+            class="primary-btn full-btn"
+            onclick="continueRentRules()"
+        >
+            Продолжить
+        </button>
+        `
+    );
+}
+
+function continueRentRules(){
+
+    const checkbox =
+        document.getElementById(
+            "rentRulesAgree"
+        );
+
+    if(!checkbox?.checked){
+        showToast(
+            "Подтверди согласие с правилами"
+        );
+        return;
+    }
+
+    renderRentPetPicker();
+}
+
+
+/* =========================================================
+   RENT PET PICKER
+========================================================= */
+
+function renderRentPetPicker(query=""){
+
+    const normalized =
+        query
+            .trim()
+            .toLowerCase();
+
+    const list =
+        PETS.filter(
+            p =>
+                isRentablePet(p) &&
+                (
+                    p.name
+                        .toLowerCase()
+                        .includes(normalized)
+                )
+        );
+
+    openModal(
+        "Выберите питомца",
+        `
+        <input
+            class="search"
+            id="rentPetSearch"
+            placeholder="Поиск питомца..."
+            value="${escapeHtml(query)}"
+            oninput="renderRentSearch(this.value)"
+        >
+
+        <div class="pet-list" id="rentPetList">
+            ${renderPetOptions(list,"rent")}
+        </div>
+        `
+    );
+}
+
+function renderRentSearch(query){
+
+    const normalized =
+        query
+            .trim()
+            .toLowerCase();
+
+    const list =
+        PETS.filter(
+            p =>
+                isRentablePet(p) &&
+                p.name
+                    .toLowerCase()
+                    .includes(normalized)
+        );
+
+    const container =
+        document.getElementById(
+            "rentPetList"
+        );
+
+    if(container){
+        container.innerHTML =
+            renderPetOptions(list,"rent");
+    }
+}
+
+function renderPetOptions(list,type){
+
+    if(!list.length){
+
+        return `
+        <div class="empty">
+            <div class="empty-icon">🔎</div>
+            <div>Питомец не найден</div>
+        </div>
+        `;
+    }
+
+    return list.map(p => {
+
+        return `
+        <button
+            class="pet-option"
+            onclick="${
+                type === "rent"
+                ? `selectRentPet('${p.id}')`
+                : `selectSupplyPet('${p.id}')`
+            }"
+        >
+
+            <div class="pet-avatar">
+                ${p.emoji}
+            </div>
+
+            <div class="pet-option-info">
+
+                <strong>
+                    ${escapeHtml(p.name)}
+                </strong>
+
+                <span>
+                    Elvebredd: ${p.value}
+                </span>
+
+            </div>
+
+            <div class="pet-option-price">
+
+                <strong>
+                    от ${price(p,"Normal")} ⭐
+                </strong>
+
+                <span>
+                    за 24 часа
+                </span>
+
+            </div>
+
+        </button>
+        `;
+
+    }).join("");
+}
+
+
+/* =========================================================
+   RENT STATE
+========================================================= */
+
+let currentRentPet = null;
+let currentRentVariant = "Normal";
+let currentRentOffer = null;
+let currentRentDate = "";
+let currentRentTime = "";
+
+
+/* =========================================================
+   SELECT RENT PET
+========================================================= */
+
+function selectRentPet(id){
+
+    const selected =
+        pet(id);
+
+    if(!selected){
+        showToast("Питомец не найден");
+        return;
+    }
+
+    currentRentPet =
+        selected;
+
+    currentRentVariant =
+        "Normal";
+
+    renderRentVariant();
+}
+
+
+/* =========================================================
+   RENT VARIANT
+========================================================= */
+
+function renderRentVariant(){
+
+    const p =
+        currentRentPet;
+
+    if(!p) return;
+
+    const variants =
+        availableVariants(p);
+
+    openModal(
+        "Вариант питомца",
+        `
+        <div class="card">
+
+            <div style="display:flex;gap:12px;align-items:center;">
+
+                <div class="pet-avatar">
+                    ${p.emoji}
+                </div>
+
+                <div>
+                    <div style="font-weight:800;font-size:15px;">
+                        ${escapeHtml(p.name)}
+                    </div>
+
+                    <div class="muted" style="margin-top:4px;">
+                        Elvebredd: ${p.value}
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="variant-hint">
+            Выбери вариант питомца. F — Fly, R — Ride,
+            N — Neon, M — Mega Neon.
+        </div>
+
+        <div class="variants">
+
+            ${renderVariantButton("Normal","Обычный",variants)}
+
+            ${renderVariantButton("F","F",variants)}
+
+            ${renderVariantButton("R","R",variants)}
+
+            ${renderVariantButton("N","N",variants)}
+
+            ${renderVariantButton("M","M",variants)}
+
+        </div>
+
+        <div id="variantPreview"></div>
+
+        <button
+            class="primary-btn full-btn"
+            onclick="showRentOffers()"
+        >
+            Показать доступные предложения
+        </button>
+        `
+    );
+
+    updateVariantPreview();
+}
+
+function renderVariantButton(value,label,variants){
+
+    const selectedTier =
+        variantTier(
+            currentRentVariant
+        );
+
+    let active = false;
+
+    if(value === "Normal"){
+        active =
+            selectedTier === "Normal";
+    }
+
+    if(value === "N"){
+        active =
+            selectedTier === "N";
+    }
+
+    if(value === "M"){
+        active =
+            selectedTier === "M";
+    }
+
+    if(value === "F"){
+        active =
+            variantHasF(
+                currentRentVariant
+            );
+    }
+
+    if(value === "R"){
+        active =
+            variantHasR(
+                currentRentVariant
+            );
+    }
+
+    const disabled =
+        !variants.includes(value) &&
+        (
+            value === "N" ||
+            value === "M"
+        );
+
+    return `
+    <button
+        class="variant ${active ? "active" : ""} ${disabled ? "disabled" : ""}"
+        ${disabled ? "disabled" : ""}
+        onclick="setRentVariant('${value}')"
+    >
+        ${label}
+    </button>
+    `;
+}
+
+function setRentVariant(value){
+
+    if(value === "F"){
+
+        const f =
+            !variantHasF(
+                currentRentVariant
+            );
+
+        currentRentVariant =
+            makeVariant(
+                variantTier(currentRentVariant),
+                f,
+                variantHasR(currentRentVariant)
+            );
+
+    }else if(value === "R"){
+
+        const r =
+            !variantHasR(
+                currentRentVariant
+            );
+
+        currentRentVariant =
+            makeVariant(
+                variantTier(currentRentVariant),
+                variantHasF(currentRentVariant),
+                r
+            );
+
+    }else{
+
+        currentRentVariant =
+            makeVariant(
+                value,
+                variantHasF(currentRentVariant),
+                variantHasR(currentRentVariant)
+            );
+    }
+
+    renderRentVariant();
+}
+
+function updateVariantPreview(){
+
+    const box =
+        document.getElementById(
+            "variantPreview"
+        );
+
+    if(!box || !currentRentPet) return;
+
+    box.innerHTML = `
+        <div class="price-box">
+
+            <div class="price-row">
+                <span>Питомец</span>
+                <strong>
+                    ${escapeHtml(currentRentPet.name)}
+                </strong>
+            </div>
+
+            <div class="price-row">
+                <span>Вариант</span>
+                <strong>
+                    ${currentRentVariant}
+                </strong>
+            </div>
+
+            <div class="price-row price-total">
+                <span>Примерная стоимость</span>
+                <strong>
+                    ${price(currentRentPet,currentRentVariant)} ⭐
+                </strong>
+            </div>
+
+        </div>
+    `;
+}
+
+
+/* =========================================================
+   RENT OFFERS
+========================================================= */
+
+function showRentOffers(){
+
+    if(!currentRentPet){
+        showToast("Выбери питомца");
+        return;
+    }
+
+    const list =
+        offers(
+            currentRentPet.id,
+            currentRentVariant
+        );
+
+    openModal(
+        "Доступные предложения",
+        `
+        <div class="card">
+
+            <div style="font-weight:800;">
+                ${currentRentPet.emoji}
+                ${escapeHtml(currentRentPet.name)}
+            </div>
+
+            <div class="muted" style="margin-top:5px;">
+                Вариант: ${currentRentVariant}
+                · Аренда на 24 часа
+            </div>
+
+        </div>
+
+        <div class="offer-list">
+
+            ${list.map(o => `
+                <button
+                    class="offer"
+                    onclick="selectRentOffer('${o.id}')"
+                >
+
+                    <div class="offer-info">
+
+                        <strong>
+                            ${escapeHtml(o.seller)}
+                        </strong>
+
+                        <span>
+                            Передача после подтверждения
+                        </span>
+
+                    </div>
+
+                    <div class="offer-price">
+                        ${o.price} ⭐
+                    </div>
+
+                </button>
+            `).join("")}
+
+        </div>
+        `
+    );
+}
+
+function selectRentOffer(id){
+
+    const list =
+        offers(
+            currentRentPet.id,
+            currentRentVariant
+        );
+
+    currentRentOffer =
+        list.find(
+            o => o.id === id
+        );
+
+    if(!currentRentOffer){
+        showToast("Предложение не найдено");
+        return;
+    }
+
+    renderRentDate();
+}
+
+
+/* =========================================================
+   RENT DATE
+========================================================= */
+
+function nextDates(){
+
+    const dates = [];
+
+    const now =
+        new Date();
+
+    for(let i=0;i<14;i++){
+
+        const d =
+            new Date(now);
+
+        d.setDate(
+            d.getDate() + i
+        );
+
+        const iso =
+            d.toISOString()
+                .slice(0,10);
+
+        const label =
+            d.toLocaleDateString(
+                "ru-RU",
+                {
+                    weekday:"short",
+                    day:"2-digit",
+                    month:"2-digit"
+                }
+            );
+
+        dates.push({
+            iso,
+            label
+        });
+    }
+
+    return dates;
+}
+
+function timeOptions(){
+
+    const arr = [];
+
+    for(
+        let h=17;
+        h<=18;
+        h++
+    ){
+
+        for(
+            let m=0;
+            m<60;
+            m+=5
+        ){
+
+            if(h === 17 && m < 30){
+                continue;
+            }
+
+            if(h === 18 && m > 0){
+                continue;
+            }
+
+            arr.push(
+                String(h).padStart(2,"0") +
+                ":" +
+                String(m).padStart(2,"0")
+            );
+        }
+    }
+
+    return arr;
+}
+
+function renderRentDate(){
+
+    const dates =
+        nextDates();
+
+    const times =
+        timeOptions();
+
+    currentRentDate =
+        dates[0].iso;
+
+    currentRentTime =
+        times[0];
+
+    openModal(
+        "Дата и время передачи",
+        `
+        <div class="card">
+
+            <div class="card-title">
+                ${currentRentPet.emoji}
+                ${escapeHtml(currentRentPet.name)}
+            </div>
+
+            <p class="card-subtitle">
+                ${currentRentVariant}
+                · ${currentRentOffer.price} ⭐
+                · аренда на 24 часа
+            </p>
+
+        </div>
+
+        <div class="field">
+
+            <label>
+                Дата передачи
+            </label>
+
+            <select
+                id="rentDate"
+                onchange="currentRentDate=this.value"
+            >
+
+                ${dates.map(
+                    d => `
+                    <option value="${d.iso}">
+                        ${d.label}
+                    </option>
+                    `
+                ).join("")}
+
+            </select>
+
+        </div>
+
+        <div class="field">
+
+            <label>
+                Время передачи
+            </label>
+
+            <select
+                id="rentTime"
+                onchange="currentRentTime=this.value"
+            >
+
+                ${times.map(
+                    t => `
+                    <option value="${t}">
+                        ${t}
+                    </option>
+                    `
+                ).join("")}
+
+            </select>
+
+        </div>
+
+        <div class="payment-note">
+            Передача осуществляется в промежутке
+            с ${CONFIG.HANDOVER_FROM} до ${CONFIG.HANDOVER_TO}
+            по Москве.
+        </div>
+
+        <div class="checkbox-row">
+
+            <input
+                type="checkbox"
+                id="rentDepositAgree"
+            >
+
+            <label for="rentDepositAgree">
+                Я понимаю, что питомца необходимо вернуть
+                после окончания 24-часовой аренды, и готов внести в качестве залога самого дорогого питомца из моего инвентаря.
+            </label>
+
+        </div>
+
+        <button
+            class="primary-btn full-btn"
+            onclick="continueRentConfirmation()"
+        >
+            Перейти к подтверждению
+        </button>
+        `
+    );
+}
+
+
+/* =========================================================
+   RENT CONFIRMATION
+========================================================= */
+
+function continueRentConfirmation(){
+
+    const checkbox =
+        document.getElementById(
+            "rentDepositAgree"
+        );
+
+    if(!checkbox?.checked){
+
+        showToast(
+            "Подтверди условия аренды"
+        );
+
+        return;
+    }
+
+    currentRentDate =
+        document.getElementById(
+            "rentDate"
+        )?.value ||
+        currentRentDate;
+
+    currentRentTime =
+        document.getElementById(
+            "rentTime"
+        )?.value ||
+        currentRentTime;
+
+    renderRentConfirmation();
+}
+
+function renderRentConfirmation(){
+
+    const total =
+        currentRentOffer.price;
+
+    openModal(
+        "Подтверждение аренды",
+        `
+        <div class="success">
+
+            <div class="success-icon">
+                🐾
+            </div>
+
+            <h2>
+                Проверь данные
+            </h2>
+
+            <p>
+                После подтверждения будет создана заявка.
+                Оплату можно будет выполнить кнопкой
+                «⭐ Оплатить аренду».
+            </p>
+
+        </div>
+
+        <div class="price-box">
+
+            <div class="price-row">
+                <span>Питомец</span>
+                <strong>
+                    ${currentRentPet.emoji}
+                    ${escapeHtml(currentRentPet.name)}
+                </strong>
+            </div>
+
+            <div class="price-row">
+                <span>Вариант</span>
+                <strong>
+                    ${currentRentVariant}
+                </strong>
+            </div>
+
+            <div class="price-row">
+                <span>Дата передачи</span>
+                <strong>
+                    ${formatDate(currentRentDate)}
+                </strong>
+            </div>
+
+            <div class="price-row">
+                <span>Время передачи</span>
+                <strong>
+                    ${currentRentTime}
+                </strong>
+            </div>
+
+            <div class="price-row">
+                <span>Срок аренды</span>
+                <strong>
+                    24 часа
+                </strong>
+            </div>
+
+            <div class="price-row price-total">
+                <span>К оплате</span>
+                <strong>
+                    ${total} ⭐
+                </strong>
+            </div>
+
+        </div>
+
+        <button
+            class="primary-btn full-btn"
+            onclick="createRentApplication()"
+        >
+            Подтвердить аренду
+        </button>
+
+        <div class="payment-note">
+            ⭐ Кнопка оплаты появится сразу после создания заявки.
+            В дальнейшем она будет подключена к оплате
+            через Telegram Stars.
+        </div>
+        `
+    );
+}
+
+
+/* =========================================================
+   CREATE RENT APPLICATION
+========================================================= */
+
+function createRentApplication(){
+
+    if(
+        !currentRentPet ||
+        !currentRentOffer
+    ){
+
+        showToast(
+            "Не удалось создать заявку"
+        );
+
+        return;
+    }
+
+    const user =
+        getProfile();
+
+    const application = {
+
+        id:generateId("rent"),
+
+        type:"rent",
+
+        status:"awaiting_payment",
+
+        createdAt:
+            new Date().toISOString(),
+
+        petId:
+            currentRentPet.id,
+
+        petName:
+            currentRentPet.name,
+
+        petEmoji:
+            currentRentPet.emoji,
+
+        petValue:
+            currentRentPet.value,
+
+        variant:
+            currentRentVariant,
+
+        seller:
+            currentRentOffer.seller,
+
+        price:
+            currentRentOffer.price,
+
+        date:
+            currentRentDate,
+
+        time:
+            currentRentTime,
+
+        rentalHours:
+            CONFIG.RENTAL_HOURS,
+
+        invoiceUrl:"",
+
+        telegramUserId:
+            user.id,
+
+        telegramUsername:
+            user.username,
+
+        telegramFirstName:
+            user.firstName
+    };
+
+    applications.unshift(
+        application
+    );
+
+    saveApplications();
+
+    sendApplicationToBackend(
+        application
+    );
+
+    currentRentPet = null;
+    currentRentOffer = null;
+
+    showPaymentModal(
+        application
+    );
+}
+
+
+/* =========================================================
+   PAYMENT MODAL
+========================================================= */
+
+function showPaymentModal(application){
+
+    openModal(
+        "Заявка создана",
+        `
+        <div class="success">
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+            <h2>
+                Аренда оформлена
+            </h2>
+
+            <p>
+                Заявка №${escapeHtml(application.id)}
+                создана.
+                Теперь можно перейти к оплате.
+            </p>
+
+        </div>
+
+        <div class="price-box">
+
+            <div class="price-row">
+                <span>Питомец</span>
+
+                <strong>
+                    ${application.petEmoji}
+                    ${escapeHtml(application.petName)}
+                </strong>
+            </div>
+
+            <div class="price-row">
+                <span>Вариант</span>
+
+                <strong>
+                    ${application.variant}
+                </strong>
+            </div>
+
+            <div class="price-row">
+                <span>Срок</span>
+
+                <strong>
+                    24 часа
+                </strong>
+            </div>
+
+            <div class="price-row price-total">
+                <span>К оплате</span>
+
+                <strong>
+                    ${application.price} ⭐
+                </strong>
+            </div>
+
+        </div>
+
+        <button
+            class="primary-btn full-btn"
+            onclick="payForRent('${application.id}')"
+        >
+            ⭐ Оплатить аренду
+        </button>
+
+        <div class="payment-note">
+            Сейчас кнопка подготовлена под будущую интеграцию
+            с Telegram Stars. После подключения бота она будет
+            открывать настоящее окно оплаты.
+        </div>
+
+        <button
+            class="secondary-btn full-btn"
+            onclick="showScreen('applications');closeModal();"
+        >
+            Посмотреть мои заявки
+        </button>
+        `
+    );
+}
+
+
+/* =========================================================
+   TELEGRAM STARS PAYMENT
+========================================================= */
+
+function payForRent(applicationId){
+
+    const application =
+        applications.find(
+            a => a.id === applicationId
+        );
+
+    if(!application){
+
+        showToast(
+            "Заявка не найдена"
+        );
+
+        return;
+    }
+
+    /*
+       ПОКА invoiceUrl пустой.
+
+       Когда бот будет подключён,
+       сюда будет передаваться настоящая
+       Telegram Stars invoice-ссылка.
+    */
+
+    if(
+        application.invoiceUrl &&
+        tg &&
+        typeof tg.openInvoice === "function"
+    ){
+
+        tg.openInvoice(
+            application.invoiceUrl,
+            function(status){
+
+                if(status === "paid"){
+
+                    updateApplicationStatus(
+                        application.id,
+                        "paid"
+                    );
+
+                    showToast(
+                        "Оплата прошла успешно"
+                    );
+                }
+
+                if(status === "cancelled"){
+                    showToast(
+                        "Оплата отменена"
+                    );
+                }
+
+                if(status === "failed"){
+                    showToast(
+                        "Не удалось провести оплату"
+                    );
+                }
+
+            }
+        );
+
+        return;
+    }
+
+    showToast(
+        "Оплата Telegram Stars пока не подключена"
+    );
+}
+
+
+/* =========================================================
+   SUPPLY
+========================================================= */
+
+let currentSupplyPet = null;
+let currentSupplyVariant = "Normal";
+let currentSupplyDate = "";
+let currentSupplyTime = "";
+let currentSupplyRoblox = "";
+
+function startSupply(){
+
+    openModal(
+        "Правила сдачи питомца",
+        `
+        <div class="rules">
+
+            <h3>
+                Условия сдачи питомца
+            </h3>
+
+            <p>
+                • Питомец должен быть больше 4х валют по elvebredd
+            </p>
+
+            <p>
+                • Для передачи используется Roblox-аккаунт
+                <b>${CONFIG.SUPPLIER_ROBLOX}</b>.
+            </p>
+
+            <p>
+                • Питомец предоставляется для аренды на 24 часа.
+            </p>
+
+            <p>
+                • После окончания аренды питомец возвращается владельцу.
+            </p>
+
+            <p>
+                • Комиссия сервиса составляет ${CONFIG.COMMISSION}%.
+            </p>
+
+            <p>
+                • Выплата владельцу производится после завершения аренды.
+            </p>
+
+        </div>
+
+        <div class="checkbox-row">
+
+            <input
+                type="checkbox"
+                id="supplyRulesAgree"
+            >
+
+            <label for="supplyRulesAgree">
+                Я прочитал(а) правила сдачи питомца и согласен(на) с ними.
+            </label>
+
+        </div>
+
+        <button
+            class="primary-btn full-btn"
+            onclick="continueSupplyRules()"
+        >
+            Продолжить
+        </button>
+        `
+    );
+}
+
+function continueSupplyRules(){
+
+    const checkbox =
+        document.getElementById(
+            "supplyRulesAgree"
+        );
+
+    if(!checkbox?.checked){
+
+        showToast(
+            "Подтверди согласие с правилами"
+        );
+
+        return;
+    }
+
+    renderSupplyPetPicker();
+}
+
+function renderSupplyPetPicker(query=""){
+
+    const normalized =
+        query
+            .trim()
+            .toLowerCase();
+
+    const list =
+        PETS.filter(
+            p =>
+                isSupplyPet(p) &&
+                p.name
+                    .toLowerCase()
+                    .includes(normalized)
+        );
+
+    openModal(
+        "Выберите питомца",
+        `
+        <input
+            class="search"
+            id="supplyPetSearch"
+            placeholder="Поиск питомца..."
+            value="${escapeHtml(query)}"
+            oninput="renderSupplySearch(this.value)"
+        >
+
+        <div
+            class="pet-list"
+            id="supplyPetList"
+        >
+            ${renderPetOptions(list,"supply")}
+        </div>
+        `
+    );
+}
+
+function renderSupplySearch(query){
+
+    const normalized =
+        query
+            .trim()
+            .toLowerCase();
+
+    const list =
+        PETS.filter(
+            p =>
+                isSupplyPet(p) &&
+                p.name
+                    .toLowerCase()
+                    .includes(normalized)
+        );
+
+    const container =
+        document.getElementById(
+            "supplyPetList"
+        );
+
+    if(container){
+
+        container.innerHTML =
+            renderPetOptions(
+                list,
+                "supply"
+            );
+    }
+}
+
+function selectSupplyPet(id){
+
+    const selected =
+        pet(id);
+
+    if(
+        !selected ||
+        !isSupplyPet(selected)
+    ){
+
+        showToast(
+            "Этот питомец не подходит для сдачи"
+        );
+
+        return;
+    }
+
+    currentSupplyPet =
+        selected;
+
+    currentSupplyVariant =
+        "Normal";
+
+    renderSupplyVariant();
+}
+
+function renderSupplyVariant(){
+
+    const p =
+        currentSupplyPet;
+
+    const variants =
+        availableVariants(p);
+
+    openModal(
+        "Вариант питомца",
+        `
+        <div class="card">
+
+            <div style="display:flex;gap:12px;align-items:center;">
+
+                <div class="pet-avatar">
+                    ${p.emoji}
+                </div>
+
+                <div>
+
+                    <div style="font-weight:800;font-size:15px;">
+                        ${escapeHtml(p.name)}
+                    </div>
+
+                    <div class="muted" style="margin-top:4px;">
+                        Elvebredd: ${p.value}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="variants">
+
+            ${renderSupplyVariantButton(
+                "Normal",
+                "Обычный",
+                variants
+            )}
+
+            ${renderSupplyVariantButton(
+                "F",
+                "F",
+                variants
+            )}
+
+            ${renderSupplyVariantButton(
+                "R",
+                "R",
+                variants
+            )}
+
+            ${renderSupplyVariantButton(
+                "N",
+                "N",
+                variants
+            )}
+
+            ${renderSupplyVariantButton(
+                "M",
+                "M",
+                variants
+            )}
+
+        </div>
+
+        <div class="price-box">
+
+            <div class="price-row">
+                <span>Рекомендуемая цена</span>
+                <strong>
+                    ${price(p,currentSupplyVariant)} ⭐
+                </strong>
+            </div>
+
+            <div class="price-row">
+                <span>Комиссия</span>
+                <strong>
+                    ${CONFIG.COMMISSION}%
+                </strong>
+            </div>
+
+        </div>
+
+        <button
+            class="primary-btn full-btn"
+            onclick="continueSupplyVariant()"
+        >
+            Продолжить
+        </button>
+        `
+    );
+}
+
+function renderSupplyVariantButton(
+    value,
+    label,
+    variants
+){
+
+    const tier =
+        variantTier(
+            currentSupplyVariant
+        );
+
+    let active = false;
+
+    if(value === "Normal"){
+        active = tier === "Normal";
+    }
+
+    if(value === "N"){
+        active = tier === "N";
+    }
+
+    if(value === "M"){
+        active = tier === "M";
+    }
+
+    if(value === "F"){
+        active =
+            variantHasF(
+                currentSupplyVariant
+            );
+    }
+
+    if(value === "R"){
+        active =
+            variantHasR(
+                currentSupplyVariant
+            );
+    }
+
+    return `
+    <button
+        class="variant ${active ? "active" : ""}"
+        onclick="setSupplyVariant('${value}')"
+    >
+        ${label}
+    </button>
+    `;
+}
+
+function setSupplyVariant(value){
+
+    if(value === "F"){
+
+        currentSupplyVariant =
+            makeVariant(
+                variantTier(
+                    currentSupplyVariant
+                ),
+                !variantHasF(
+                    currentSupplyVariant
+                ),
+                variantHasR(
+                    currentSupplyVariant
+                )
+            );
+
+    }else if(value === "R"){
+
+        currentSupplyVariant =
+            makeVariant(
+                variantTier(
+                    currentSupplyVariant
+                ),
+                variantHasF(
+                    currentSupplyVariant
+                ),
+                !variantHasR(
+                    currentSupplyVariant
+                )
+            );
+
+    }else{
+
+        currentSupplyVariant =
+            makeVariant(
+                value,
+                variantHasF(
+                    currentSupplyVariant
+                ),
+                variantHasR(
+                    currentSupplyVariant
+                )
+            );
+    }
+
+    renderSupplyVariant();
+}
+
+function continueSupplyVariant(){
+
+    renderSupplyRoblox();
+}
+
+function renderSupplyRoblox(){
+
+    openModal(
+        "Roblox-аккаунт",
+        `
+        <div class="card">
+
+            <h3 class="card-title">
+                Передача питомца
+            </h3>
+
+            <p class="card-subtitle">
+                Для передачи используется аккаунт
+                <b style="color:#aaa4ff;">
+                    ${CONFIG.SUPPLIER_ROBLOX}
+                </b>.
+            </p>
+
+        </div>
+
+        <div class="field">
+
+            <label>
+                Твой Roblox username
+            </label>
+
+            <input
+                id="supplyRoblox"
+                placeholder="Например: MyUsername123"
+                maxlength="30"
+            >
+
+        </div>
+
+        <button
+            class="primary-btn full-btn"
+            onclick="continueSupplyRoblox()"
+        >
+            Продолжить
+        </button>
+        `
+    );
+}
+
+function continueSupplyRoblox(){
+
+    const input =
+        document.getElementById(
+            "supplyRoblox"
+        );
+
+    const value =
+        input?.value
+            .trim();
+
+    if(!value){
+
+        showToast(
+            "Укажи Roblox username"
+        );
+
+        return;
+    }
+
+    currentSupplyRoblox =
+        value;
+
+    renderSupplyDate();
+}
+
+
+/* =========================================================
+   SUPPLY DATE
+========================================================= */
+
+function renderSupplyDate(){
+
+    const dates =
+        nextDates();
+
+    const times =
+        timeOptions();
+
+    currentSupplyDate =
+        dates[0].iso;
+
+    currentSupplyTime =
+        times[0];
+
+    openModal(
+        "Дата передачи",
+        `
+        <div class="field">
+
+            <label>
+                Дата
+            </label>
+
+            <select
+                id="supplyDate"
+                onchange="currentSupplyDate=this.value"
+            >
+
+                ${dates.map(
+                    d => `
+                    <option value="${d.iso}">
+                        ${d.label}
+                    </option>
+                    `
+                ).join("")}
+
+            </select>
+
+        </div>
+
+        <div class="field">
+
+            <label>
+                Время
+            </label>
+
+            <select
+                id="supplyTime"
+                onchange="currentSupplyTime=this.value"
+            >
+
+                ${times.map(
+                    t => `
+                    <option value="${t}">
+                        ${t}
+                    </option>
+                    `
+                ).join("")}
+
+            </select>
+
+        </div>
+
+        <button
+            class="primary-btn full-btn"
+            onclick="continueSupplyDate()"
+        >
+            Проверить заявку
+        </button>
+        `
+    );
+}
+
+function continueSupplyDate(){
+
+    currentSupplyDate =
+        document.getElementById(
+            "supplyDate"
+        )?.value ||
+        currentSupplyDate;
+
+    currentSupplyTime =
+        document.getElementById(
+            "supplyTime"
+        )?.value ||
+        currentSupplyTime;
+
+    renderSupplyReview();
+}
+
+
+/* =========================================================
+   SUPPLY REVIEW
+========================================================= */
+
+function renderSupplyReview(){
+
+    const suggested =
+        price(
+            currentSupplyPet,
+            currentSupplyVariant
+        );
+
+    const payout =
+        Math.round(
+            suggested *
+            (1 -
+            CONFIG.COMMISSION / 100)
+        );
+
+    openModal(
+        "Проверка заявки",
+        `
+        <div class="card">
+
+            <div style="display:flex;gap:12px;align-items:center;">
+
+                <div class="pet-avatar">
+                    ${currentSupplyPet.emoji}
+                </div>
+
+                <div>
+
+                    <strong>
+                        ${escapeHtml(currentSupplyPet.name)}
+                    </strong>
+
+                    <div class="muted" style="margin-top:4px;">
+                        ${currentSupplyVariant}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="price-box">
+
+            <div class="price-row">
+                <span>Roblox username</span>
+                <strong>
+                    ${escapeHtml(currentSupplyRoblox)}
+                </strong>
+            </div>
+
+            <div class="price-row">
+                <span>Дата передачи</span>
+                <strong>
+                    ${formatDate(currentSupplyDate)}
+                </strong>
+            </div>
+
+            <div class="price-row">
+                <span>Время передачи</span>
+                <strong>
+                    ${currentSupplyTime}
+                </strong>
+            </div>
+
+            <div class="price-row">
+                <span>Рекомендуемая стоимость</span>
+                <strong>
+                    ${suggested} ⭐
+                </strong>
+            </div>
+
+            <div class="price-row">
+                <span>Комиссия ${CONFIG.COMMISSION}%</span>
+                <strong>
+                    -${suggested-payout} ⭐
+                </strong>
+            </div>
+
+            <div class="price-row price-total">
+                <span>Ориентировочная выплата</span>
+                <strong>
+                    ${payout} ⭐
+                </strong>
+            </div>
+
+        </div>
+
+        <button
+            class="primary-btn full-btn"
+            onclick="createSupplyApplication()"
+        >
+            Отправить заявку
+        </button>
+
+        <div class="payment-note">
+            Итоговая стоимость и возможность аренды
+            подтверждаются после проверки заявки.
+        </div>
+        `
+    );
+}
+
+
+/* =========================================================
+   CREATE SUPPLY APPLICATION
+========================================================= */
+
+function createSupplyApplication(){
+
+    if(!currentSupplyPet){
+
+        showToast(
+            "Питомец не выбран"
+        );
+
+        return;
+    }
+
+    const user =
+        getProfile();
+
+    const suggested =
+        price(
+            currentSupplyPet,
+            currentSupplyVariant
+        );
+
+    const payout =
+        Math.round(
+            suggested *
+            (1 -
+            CONFIG.COMMISSION / 100)
+        );
+
+    const application = {
+
+        id:generateId("supply"),
+
+        type:"supply",
+
+        status:"review",
+
+        createdAt:
+            new Date().toISOString(),
+
+        petId:
+            currentSupplyPet.id,
+
+        petName:
+            currentSupplyPet.name,
+
+        petEmoji:
+            currentSupplyPet.emoji,
+
+        petValue:
+            currentSupplyPet.value,
+
+        variant:
+            currentSupplyVariant,
+
+        robloxUsername:
+            currentSupplyRoblox,
+
+        serviceRoblox:
+            CONFIG.SUPPLIER_ROBLOX,
+
+        date:
+            currentSupplyDate,
+
+        time:
+            currentSupplyTime,
+
+        suggestedPrice:
+            suggested,
+
+        commission:
+            CONFIG.COMMISSION,
+
+        estimatedPayout:
+            payout,
+
+        telegramUserId:
+            user.id,
+
+        telegramUsername:
+            user.username,
+
+        telegramFirstName:
+            user.firstName
+    };
+
+    applications.unshift(
+        application
+    );
+
+    saveApplications();
+
+    sendApplicationToBackend(
+        application
+    );
+
+    showSupplySuccess(
+        application
+    );
+}
+
+function showSupplySuccess(application){
+
+    openModal(
+        "Заявка отправлена",
+        `
+        <div class="success">
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+            <h2>
+                Заявка принята
+            </h2>
+
+            <p>
+                Заявка №${escapeHtml(application.id)}
+                отправлена на проверку.
+            </p>
+
+        </div>
+
+        <div class="price-box">
+
+            <div class="price-row">
+                <span>Питомец</span>
+                <strong>
+                    ${application.petEmoji}
+                    ${escapeHtml(application.petName)}
+                </strong>
+            </div>
+
+            <div class="price-row">
+                <span>Вариант</span>
+                <strong>
+                    ${application.variant}
+                </strong>
+            </div>
+
+            <div class="price-row">
+                <span>Статус</span>
+                <strong>
+                    На проверке
+                </strong>
+            </div>
+
+        </div>
+
+        <button
+            class="primary-btn full-btn"
+            onclick="showScreen('applications');closeModal();"
+        >
+            Открыть мои заявки
+        </button>
+        `
+    );
+}
+
+
+/* =========================================================
+   APPLICATIONS RENDER
+========================================================= */
+
+function renderApplications(){
+
+    const container =
+        document.getElementById(
+            "applicationsList"
+        );
+
+    const count =
+        document.getElementById(
+            "applicationCount"
+        );
+
+    if(count){
+        count.textContent =
+            applications.length;
+    }
+
+    if(!container) return;
+
+    if(!applications.length){
+
+        container.innerHTML = `
+            <div class="empty">
+                <div class="empty-icon">
+                    📋
+                </div>
+
+                <div>
+                    У тебя пока нет заявок
+                </div>
+
+                <div
+                    class="muted"
+                    style="margin-top:7px;"
+                >
+                    Здесь будут отображаться аренды
+                    и заявки на сдачу питомцев.
+                </div>
+            </div>
+        `;
+
+        return;
+    }
+
+    container.innerHTML =
+        applications
+            .map(
+                renderApplication
+            )
+            .join("");
+}
+
+function renderApplication(a){
+
+    const status =
+        getStatusInfo(
+            a.status
+        );
+
+    const date =
+        a.date
+            ? formatDate(a.date)
+            : "—";
+
+    const typeText =
+        a.type === "rent"
+            ? "Аренда"
+            : "Сдача";
+
+    let paymentButton = "";
+
+    if(
+        a.type === "rent" &&
+        (
+            a.status ===
+            "awaiting_payment" ||
+            a.status === "payment_pending"
+        )
+    ){
+
+        paymentButton = `
+            <div class="application-payment">
+
+                <button
+                    class="primary-btn full-btn"
+                    onclick="payForRent('${a.id}')"
+                >
+                    ⭐ Оплатить аренду
+                </button>
+
+            </div>
+        `;
+    }
+
+    return `
+    <div class="application">
+
+        <div class="application-top">
+
+            <div class="application-pet">
+
+                <div class="pet-avatar">
+                    ${a.petEmoji || "🐾"}
+                </div>
+
+                <div class="pet-name">
+
+                    <strong>
+                        ${escapeHtml(
+                            a.petName ||
+                            "Питомец"
+                        )}
+                    </strong>
+
+                    <span>
+                        ${typeText}
+                        · ${escapeHtml(
+                            a.variant ||
+                            "Normal"
+                        )}
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="status ${status.class}">
+                ${status.text}
+            </div>
+
+        </div>
+
+        <div class="application-details">
+
+            <div class="detail">
+                <span>
+                    Дата
+                </span>
+
+                <strong>
+                    ${date}
+                </strong>
+            </div>
+
+            <div class="detail">
+                <span>
+                    Время
+                </span>
+
+                <strong>
+                    ${a.time || "—"}
+                </strong>
+            </div>
+
+            <div class="detail">
+                <span>
+                    ${a.type === "rent"
+                        ? "Стоимость"
+                        : "Выплата"
+                    }
+                </span>
+
+                <strong>
+                    ${
+                        a.type === "rent"
+                        ? `${a.price || 0} ⭐`
+                        : `${a.estimatedPayout || 0} ⭐`
+                    }
+                </strong>
+            </div>
+
+            <div class="detail">
+                <span>
+                    Заявка
+                </span>
+
+                <strong>
+                    #${escapeHtml(
+                        String(a.id)
+                            .slice(-6)
+                    )}
+                </strong>
+            </div>
+
+        </div>
+
+        ${paymentButton}
+
+    </div>
+    `;
+}
+
+function getStatusInfo(status){
+
+    switch(status){
+
+        case "awaiting_payment":
+            return {
+                text:"Ожидает оплаты",
+                class:"waiting"
+            };
+
+        case "payment_pending":
+            return {
+                text:"Ожидает оплаты",
+                class:"waiting"
+            };
+
+        case "paid":
+            return {
+                text:"Оплачено",
+                class:"paid"
+            };
+
+        case "review":
+            return {
+                text:"На проверке",
+                class:"review"
+            };
+
+        case "completed":
+            return {
+                text:"Завершено",
+                class:"completed"
+            };
+
+        case "cancelled":
+            return {
+                text:"Отменено",
+                class:"cancelled"
+            };
+
+        default:
+            return {
+                text:"Обрабатывается",
+                class:"review"
+            };
+    }
+}
+
+
+/* =========================================================
+   UPDATE STATUS
+========================================================= */
+
+function updateApplicationStatus(
+    id,
+    status
+){
+
+    const application =
+        applications.find(
+            a => a.id === id
+        );
+
+    if(!application){
+        return;
+    }
+
+    application.status =
+        status;
+
+    application.updatedAt =
+        new Date().toISOString();
+
+    saveApplications();
+
+    sendApplicationToBackend(
+        application
+    );
+}
+
+
+/* =========================================================
+   PROFILE RENDER
+========================================================= */
+
+function renderProfile(){
+
+    const user =
+        getProfile();
+
+    const name =
+        [
+            user.firstName,
+            user.lastName
+        ]
+        .filter(Boolean)
+        .join(" ") ||
+        "Пользователь";
+
+    const username =
+        user.username
+            ? "@" + user.username
+            : "Telegram";
+
+    const avatar =
+        (
+            user.firstName ||
+            "U"
+        )
+        .charAt(0)
+        .toUpperCase();
+
+    document.getElementById(
+        "profileName"
+    ).textContent = name;
+
+    document.getElementById(
+        "profileUsername"
+    ).textContent = username;
+
+    document.getElementById(
+        "profileAvatar"
+    ).textContent = avatar;
+
+    document.getElementById(
+        "profileTelegram"
+    ).textContent =
+        user.id
+            ? "Telegram ID: " + user.id
+            : "Открой приложение через Telegram, чтобы получить данные профиля.";
+
+    const rentCount =
+        applications.filter(
+            a => a.type === "rent"
+        ).length;
+
+    const supplyCount =
+        applications.filter(
+            a => a.type === "supply"
+        ).length;
+
+    const completed =
+        applications.filter(
+            a => a.status === "completed"
+        ).length;
+
+    document.getElementById(
+        "statRent"
+    ).textContent =
+        rentCount;
+
+    document.getElementById(
+        "statSupply"
+    ).textContent =
+        supplyCount;
+
+    document.getElementById(
+        "statCompleted"
+    ).textContent =
+        completed;
+}
+
+
+/* =========================================================
+   SUPPORT
+========================================================= */
+
+function openSupport(){
+
+    const url =
+        "https://t.me/" +
+        CONFIG.SUPPORT_BOT;
+
+    try{
+
+        if(tg?.openTelegramLink){
+            tg.openTelegramLink(url);
+            return;
+        }
+
+    }catch(error){
+        console.log(error);
+    }
+
+    window.open(
+        url,
+        "_blank"
+    );
+}
+
+
+/* =========================================================
+   FORM BACKEND
+========================================================= */
+
+async function sendApplicationToBackend(
+    application
+){
+
+    try{
+
+        await fetch(
+            CONFIG.FORM_ENDPOINT,
+            {
+                method:"POST",
+
+                headers:{
+                    "Content-Type":
+                        "application/json",
+                    "Accept":
+                        "application/json"
+                },
+
+                body:
+                    JSON.stringify(
+                        application
+                    )
+            }
+        );
+
+    }catch(error){
+
+        console.log(
+            "Backend error:",
+            error
+        );
+
+    }
+}
+
+
+/* =========================================================
+   DATE FORMAT
+========================================================= */
+
+function formatDate(value){
+
+    if(!value){
+        return "—";
+    }
+
+    try{
+
+        const parts =
+            value.split("-");
+
+        if(parts.length === 3){
+
+            return (
+                parts[2] +
+                "." +
+                parts[1] +
+                "." +
+                parts[0]
+            );
+        }
+
+        return value;
+
+    }catch(error){
+
+        return value;
+    }
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(value){
+
+    if(value === null ||
+       value === undefined){
+
+        return "";
+    }
+
+    return String(value)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+}
+
+
+/* =========================================================
+   PUBLIC BRIDGE
+========================================================= */
+
+window.AdoptRent = {
+
+    setInvoice:function(
+        id,
+        invoiceUrl
+    ){
+
+        const application =
+            applications.find(
+                a => a.id === id
+            );
+
+        if(!application){
+            return false;
+        }
+
+        application.invoiceUrl =
+            invoiceUrl;
+
+        application.status =
+            "payment_pending";
+
+        saveApplications();
+
+        return true;
+    },
+
+    setStatus:function(
+        id,
+        status
+    ){
+
+        updateApplicationStatus(
+            id,
+            status
+        );
+
+        return true;
+    },
+
+    reload:function(){
+
+        applications =
+            loadApplications();
+
+        renderApplications();
+        renderProfile();
+
+    },
+
+    getApplications:function(){
+
+        return JSON.parse(
+            JSON.stringify(
+                applications
+            )
+        );
+
+    }
+
+};
+
+
+/* =========================================================
+   INIT
+========================================================= */
+
+function init(){
+
+    renderApplications();
+
+    renderProfile();
+
+    updateOnline();
+
+}
+
+init();
+
+
+/* =========================================================
+   CLOSE MODAL BY BACKDROP
+========================================================= */
+
+document
+    .getElementById("overlay")
+    .addEventListener(
+        "click",
+        function(event){
+
+            if(
+                event.target ===
+                this
+            ){
+                closeModal();
+            }
+
+        }
+    );
+
+
+/* =========================================================
+   PREVENT ACCIDENTAL FORM SUBMIT
+========================================================= */
+
+document
+    .addEventListener(
+        "keydown",
+        function(event){
+
+            if(
+                event.key === "Enter" &&
+                event.target.tagName === "INPUT"
+            ){
+                event.preventDefault();
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+</html>
