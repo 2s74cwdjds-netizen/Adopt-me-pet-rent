@@ -1,0 +1,6471 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#0b0b0f">
+<title>Adopt Rent</title>
+
+<style>
+*{
+box-sizing:border-box;
+-webkit-tap-highlight-color:transparent;
+}
+
+html,
+body{
+margin:0;
+padding:0;
+min-height:100%;
+background:#0b0b0f;
+color:#f5f5f7;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+}
+
+body{
+overflow-x:hidden;
+}
+
+button,
+input,
+select{
+font:inherit;
+}
+
+button{
+border:0;
+cursor:pointer;
+}
+
+.app{
+width:100%;
+max-width:560px;
+min-height:100vh;
+margin:auto;
+padding-bottom:92px;
+}
+
+.header{
+position:sticky;
+top:0;
+z-index:30;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:15px 17px;
+background:rgba(11,11,15,.95);
+backdrop-filter:blur(18px);
+border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.brand{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.brand-logo{
+width:42px;
+height:42px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:14px;
+background:linear-gradient(135deg,#756cff,#5048d6);
+font-size:21px;
+}
+
+.brand-name{
+font-size:17px;
+font-weight:800;
+}
+
+.brand-subtitle{
+margin-top:2px;
+font-size:10px;
+color:#81818c;
+}
+
+.online{
+display:flex;
+align-items:center;
+gap:6px;
+padding:8px 10px;
+border-radius:11px;
+background:#15151c;
+color:#a7a7b1;
+font-size:10px;
+}
+
+.online-dot{
+color:#55ed8c;
+}
+
+.screen{
+display:none;
+padding:18px;
+}
+
+.screen.active{
+display:block;
+}
+
+.hero{
+padding:25px 20px;
+margin-bottom:15px;
+border-radius:24px;
+background:
+radial-gradient(circle at 90% 5%,rgba(112,103,255,.25),transparent 38%),
+linear-gradient(145deg,#181821,#111117);
+border:1px solid rgba(255,255,255,.06);
+}
+
+.hero-badge{
+display:inline-flex;
+padding:7px 10px;
+margin-bottom:14px;
+border-radius:10px;
+background:rgba(112,103,255,.12);
+border:1px solid rgba(112,103,255,.2);
+color:#aaa5ff;
+font-size:10px;
+font-weight:750;
+}
+
+.hero h1{
+margin:0 0 9px;
+font-size:29px;
+line-height:1.08;
+letter-spacing:-.7px;
+}
+
+.hero p{
+margin:0;
+color:#92929d;
+font-size:12px;
+line-height:1.55;
+}
+
+.hero-buttons{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:9px;
+margin-top:20px;
+}
+
+.primary-btn,
+.secondary-btn{
+min-height:48px;
+padding:12px 14px;
+border-radius:14px;
+font-size:12px;
+font-weight:750;
+}
+
+.primary-btn{
+background:#7067ff;
+color:white;
+box-shadow:0 8px 22px rgba(112,103,255,.18);
+}
+
+.secondary-btn{
+background:#22222c;
+color:#f1f1f4;
+border:1px solid rgba(255,255,255,.06);
+}
+
+.full-btn{
+width:100%;
+}
+
+.section-title{
+display:flex;
+align-items:center;
+justify-content:space-between;
+margin:22px 2px 10px;
+}
+
+.section-title h2{
+margin:0;
+font-size:17px;
+}
+
+.section-title span{
+font-size:10px;
+color:#73737e;
+}
+
+.info-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:9px;
+}
+
+.info-card{
+padding:14px;
+border-radius:17px;
+background:#15151c;
+border:1px solid rgba(255,255,255,.05);
+}
+
+.info-icon{
+width:34px;
+height:34px;
+display:flex;
+align-items:center;
+justify-content:center;
+margin-bottom:9px;
+border-radius:11px;
+background:#20202a;
+}
+
+.info-card strong{
+display:block;
+margin-bottom:4px;
+font-size:12px;
+}
+
+.info-card p{
+margin:0;
+color:#81818c;
+font-size:10px;
+line-height:1.45;
+}
+
+.steps{
+display:flex;
+flex-direction:column;
+gap:8px;
+}
+
+.step{
+display:flex;
+gap:11px;
+padding:13px;
+border-radius:16px;
+background:#15151c;
+border:1px solid rgba(255,255,255,.05);
+}
+
+.step-number{
+width:29px;
+height:29px;
+flex:0 0 29px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:9px;
+background:#252431;
+color:#aaa4ff;
+font-size:11px;
+font-weight:800;
+}
+
+.step-content strong{
+display:block;
+margin-bottom:3px;
+font-size:12px;
+}
+
+.step-content span{
+color:#81818c;
+font-size:10px;
+line-height:1.45;
+}
+
+.card{
+padding:16px;
+margin-bottom:10px;
+border-radius:18px;
+background:#15151c;
+border:1px solid rgba(255,255,255,.05);
+}
+
+.card-title{
+margin:0 0 5px;
+font-size:15px;
+}
+
+.card-subtitle{
+margin:0;
+color:#858590;
+font-size:11px;
+line-height:1.5;
+}
+
+.bottom-nav{
+position:fixed;
+left:50%;
+bottom:0;
+z-index:50;
+width:min(560px,100%);
+transform:translateX(-50%);
+display:grid;
+grid-template-columns:repeat(4,1fr);
+padding:8px 7px calc(8px + env(safe-area-inset-bottom));
+background:rgba(13,13,18,.97);
+backdrop-filter:blur(20px);
+border-top:1px solid rgba(255,255,255,.06);
+}
+
+.nav-item{
+min-height:52px;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+gap:4px;
+background:transparent;
+color:#6e6e79;
+border-radius:13px;
+}
+
+.nav-item.active{
+background:rgba(112,103,255,.09);
+color:#a8a2ff;
+}
+
+.nav-icon{
+font-size:17px;
+}
+
+.nav-label{
+font-size:9px;
+font-weight:700;
+}
+
+.profile-head{
+display:flex;
+align-items:center;
+gap:12px;
+padding:16px;
+margin-bottom:10px;
+border-radius:19px;
+background:#15151c;
+border:1px solid rgba(255,255,255,.05);
+}
+
+.profile-avatar{
+width:54px;
+height:54px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:17px;
+background:linear-gradient(135deg,#7067ff,#4d45c5);
+font-size:22px;
+font-weight:800;
+}
+
+.profile-info{
+min-width:0;
+}
+
+.profile-info strong{
+display:block;
+font-size:15px;
+overflow:hidden;
+text-overflow:ellipsis;
+white-space:nowrap;
+}
+
+.profile-info span{
+display:block;
+margin-top:4px;
+color:#7f7f8a;
+font-size:10px;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:8px;
+}
+
+.stat{
+padding:13px 7px;
+text-align:center;
+border-radius:15px;
+background:#15151c;
+border:1px solid rgba(255,255,255,.05);
+}
+
+.stat strong{
+display:block;
+font-size:17px;
+}
+
+.stat span{
+display:block;
+margin-top:4px;
+color:#74747e;
+font-size:9px;
+}
+
+.support-box{
+padding:26px 18px;
+text-align:center;
+border-radius:21px;
+background:
+radial-gradient(circle at 50% 0,rgba(112,103,255,.16),transparent 48%),
+#15151c;
+border:1px solid rgba(255,255,255,.05);
+}
+
+.support-icon{
+width:62px;
+height:62px;
+display:flex;
+align-items:center;
+justify-content:center;
+margin:0 auto 12px;
+border-radius:19px;
+background:#22222c;
+font-size:27px;
+}
+
+.support-box h2{
+margin:0 0 7px;
+font-size:18px;
+}
+
+.support-box p{
+margin:0 auto 17px;
+color:#858590;
+font-size:11px;
+line-height:1.5;
+}
+
+.application{
+padding:15px;
+margin-bottom:9px;
+border-radius:18px;
+background:#15151c;
+border:1px solid rgba(255,255,255,.05);
+}
+
+.application-top{
+display:flex;
+justify-content:space-between;
+gap:10px;
+}
+
+.application-pet{
+display:flex;
+align-items:center;
+gap:10px;
+min-width:0;
+}
+
+.pet-avatar{
+width:43px;
+height:43px;
+flex:0 0 43px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:13px;
+background:#20202a;
+font-size:21px;
+}
+
+.pet-name{
+min-width:0;
+}
+
+.pet-name strong{
+display:block;
+overflow:hidden;
+text-overflow:ellipsis;
+white-space:nowrap;
+font-size:12px;
+}
+
+.pet-name span{
+display:block;
+margin-top:4px;
+color:#777782;
+font-size:10px;
+}
+
+.status{
+padding:6px 8px;
+border-radius:9px;
+font-size:8px;
+font-weight:800;
+white-space:nowrap;
+}
+
+.status.waiting{
+color:#ffd86b;
+background:rgba(255,216,107,.1);
+}
+
+.status.paid,
+.status.completed{
+color:#64eb99;
+background:rgba(100,235,153,.1);
+}
+
+.status.review{
+color:#aaa4ff;
+background:rgba(112,103,255,.1);
+}
+
+.status.cancelled{
+color:#ff7777;
+background:rgba(255,119,119,.1);
+}
+
+.application-details{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:7px;
+margin-top:12px;
+}
+
+.detail{
+padding:9px;
+border-radius:10px;
+background:#101015;
+}
+
+.detail span{
+display:block;
+margin-bottom:3px;
+color:#6e6e78;
+font-size:8px;
+}
+
+.detail strong{
+font-size:10px;
+}
+
+.deposit-pet{
+display:flex;
+align-items:center;
+gap:9px;
+padding:11px;
+margin-top:10px;
+border-radius:13px;
+background:#191921;
+border:1px solid rgba(112,103,255,.12);
+}
+
+.deposit-pet-icon{
+width:36px;
+height:36px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:10px;
+background:#242430;
+font-size:18px;
+}
+
+.deposit-pet-text strong{
+display:block;
+font-size:10px;
+}
+
+.deposit-pet-text span{
+display:block;
+margin-top:3px;
+color:#777782;
+font-size:9px;
+}
+
+.overlay{
+position:fixed;
+inset:0;
+z-index:100;
+display:none;
+align-items:flex-end;
+justify-content:center;
+background:rgba(0,0,0,.7);
+backdrop-filter:blur(5px);
+}
+
+.overlay.open{
+display:flex;
+}
+
+.modal{
+width:min(560px,100%);
+max-height:93vh;
+overflow-y:auto;
+padding:18px 18px calc(22px + env(safe-area-inset-bottom));
+border-radius:25px 25px 0 0;
+background:#111117;
+border-top:1px solid rgba(255,255,255,.08);
+animation:up .2s ease;
+}
+
+@keyframes up{
+from{
+transform:translateY(30px);
+opacity:.5;
+}
+to{
+transform:translateY(0);
+opacity:1;
+}
+}
+
+.modal-head{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:12px;
+margin-bottom:14px;
+}
+
+.modal-head h2{
+margin:0;
+font-size:18px;
+}
+
+.close{
+width:35px;
+height:35px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:11px;
+background:#20202a;
+color:#a0a0aa;
+font-size:18px;
+}
+
+.rules{
+padding:14px;
+border-radius:16px;
+background:#17171f;
+border:1px solid rgba(255,255,255,.05);
+}
+
+.rules h3{
+margin:0 0 12px;
+font-size:13px;
+}
+
+.rules p{
+margin:0 0 12px;
+color:#92929d;
+font-size:10px;
+line-height:1.55;
+}
+
+.rules p:last-child{
+margin-bottom:0;
+}
+
+.rules strong{
+color:#d8d8de;
+}
+
+.checkbox-row{
+display:flex;
+align-items:flex-start;
+gap:9px;
+padding:11px;
+margin:12px 0;
+border-radius:13px;
+background:#181820;
+}
+
+.checkbox-row input{
+margin-top:2px;
+accent-color:#7067ff;
+}
+
+.checkbox-row label{
+color:#a8a8b2;
+font-size:10px;
+line-height:1.45;
+}
+
+.search{
+width:100%;
+height:45px;
+padding:0 13px;
+margin-bottom:10px;
+outline:none;
+border:1px solid rgba(255,255,255,.06);
+border-radius:13px;
+background:#181820;
+color:#f5f5f7;
+}
+
+.search::placeholder{
+color:#666670;
+}
+
+.pet-list{
+display:flex;
+flex-direction:column;
+gap:7px;
+max-height:48vh;
+overflow-y:auto;
+}
+
+.pet-option{
+width:100%;
+display:flex;
+align-items:center;
+gap:10px;
+padding:11px;
+text-align:left;
+border-radius:14px;
+background:#181820;
+border:1px solid rgba(255,255,255,.045);
+color:white;
+}
+
+.pet-option .pet-avatar{
+width:40px;
+height:40px;
+flex-basis:40px;
+}
+
+.pet-option-info{
+flex:1;
+min-width:0;
+}
+
+.pet-option-info strong{
+display:block;
+font-size:11px;
+}
+
+.pet-option-info span{
+display:block;
+margin-top:3px;
+color:#757580;
+font-size:9px;
+}
+
+.pet-option-price{
+text-align:right;
+}
+
+.pet-option-price strong{
+display:block;
+color:#aaa4ff;
+font-size:10px;
+}
+
+.pet-option-price span{
+display:block;
+margin-top:2px;
+color:#64646e;
+font-size:8px;
+}
+
+.variants{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:7px;
+margin:12px 0;
+}
+
+.variant{
+min-height:43px;
+border-radius:11px;
+background:#1a1a22;
+border:1px solid rgba(255,255,255,.05);
+color:#858590;
+font-size:9px;
+font-weight:750;
+}
+
+.variant.active{
+color:white;
+background:#7067ff;
+border-color:#7067ff;
+}
+
+.variant-f.active{
+background:#318dff;
+border-color:#318dff;
+}
+
+.variant-r.active{
+background:#e76c9a;
+border-color:#e76c9a;
+}
+
+.variant-n.active{
+background:#70d44b;
+border-color:#70d44b;
+}
+
+.variant-m.active{
+background:#9b63e9;
+border-color:#9b63e9;
+}
+
+.variant.disabled{
+opacity:.3;
+}
+
+.notice{
+padding:11px;
+margin:10px 0;
+border-radius:13px;
+background:#181820;
+color:#92929d;
+font-size:10px;
+line-height:1.5;
+}
+
+.offer-list{
+display:flex;
+flex-direction:column;
+gap:8px;
+}
+
+.offer{
+width:100%;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:10px;
+padding:13px;
+text-align:left;
+border-radius:15px;
+background:#181820;
+border:1px solid rgba(255,255,255,.05);
+color:white;
+}
+
+.offer-info{
+min-width:0;
+}
+
+.offer-info strong{
+display:block;
+font-size:11px;
+}
+
+.offer-info span{
+display:block;
+margin-top:4px;
+color:#777782;
+font-size:9px;
+}
+
+.offer-price{
+color:#aaa4ff;
+font-size:13px;
+font-weight:800;
+white-space:nowrap;
+}
+
+.field{
+margin-bottom:12px;
+}
+
+.field label{
+display:block;
+margin:0 0 6px 2px;
+color:#92929d;
+font-size:10px;
+font-weight:700;
+}
+
+.field input,
+.field select{
+width:100%;
+height:45px;
+padding:0 12px;
+outline:none;
+border:1px solid rgba(255,255,255,.06);
+border-radius:13px;
+background:#181820;
+color:#f5f5f7;
+}
+
+.field input::placeholder{
+color:#64646e;
+}
+
+.price-box{
+padding:14px;
+margin:11px 0;
+border-radius:16px;
+background:#181820;
+border:1px solid rgba(112,103,255,.1);
+}
+
+.price-row{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:10px;
+margin-bottom:7px;
+}
+
+.price-row:last-child{
+margin-bottom:0;
+}
+
+.price-row span{
+color:#858590;
+font-size:10px;
+}
+
+.price-row strong{
+font-size:11px;
+}
+
+.price-total{
+padding-top:9px;
+margin-top:9px;
+border-top:1px solid rgba(255,255,255,.06);
+}
+
+.price-total strong{
+color:#aaa4ff;
+font-size:16px;
+}
+
+.deposit-choice{
+display:flex;
+flex-direction:column;
+gap:8px;
+max-height:38vh;
+overflow-y:auto;
+margin-bottom:12px;
+}
+
+.deposit-option{
+width:100%;
+display:flex;
+align-items:center;
+gap:10px;
+padding:11px;
+text-align:left;
+border-radius:14px;
+background:#181820;
+border:1px solid rgba(255,255,255,.05);
+color:white;
+}
+
+.deposit-option.selected{
+border-color:#7067ff;
+background:rgba(112,103,255,.1);
+}
+
+.deposit-option .pet-avatar{
+width:40px;
+height:40px;
+flex-basis:40px;
+}
+
+.deposit-option-info{
+flex:1;
+}
+
+.deposit-option-info strong{
+display:block;
+font-size:11px;
+}
+
+.deposit-option-info span{
+display:block;
+margin-top:3px;
+color:#777782;
+font-size:9px;
+}
+
+.deposit-check{
+width:20px;
+height:20px;
+border-radius:7px;
+border:1px solid #464650;
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+font-size:11px;
+}
+
+.deposit-option.selected .deposit-check{
+background:#7067ff;
+border-color:#7067ff;
+}
+
+.selected-deposit{
+display:flex;
+align-items:center;
+gap:11px;
+padding:12px;
+margin:10px 0;
+border-radius:14px;
+background:rgba(112,103,255,.09);
+border:1px solid rgba(112,103,255,.18);
+}
+
+.selected-deposit .pet-avatar{
+width:42px;
+height:42px;
+flex-basis:42px;
+}
+
+.selected-deposit strong{
+font-size:11px;
+}
+
+.selected-deposit span{
+display:block;
+margin-top:3px;
+color:#858590;
+font-size:9px;
+}
+
+.payment-note{
+padding:11px;
+margin:10px 0;
+border-radius:13px;
+background:#181820;
+color:#858590;
+font-size:9px;
+line-height:1.5;
+}
+
+.success{
+padding:19px;
+text-align:center;
+border-radius:18px;
+background:#15151c;
+border:1px solid rgba(101,237,155,.1);
+}
+
+.success-icon{
+width:57px;
+height:57px;
+display:flex;
+align-items:center;
+justify-content:center;
+margin:0 auto 11px;
+border-radius:18px;
+background:rgba(101,237,155,.09);
+font-size:25px;
+}
+
+.success h2{
+margin:0 0 6px;
+font-size:17px;
+}
+
+.success p{
+margin:0;
+color:#858590;
+font-size:10px;
+line-height:1.5;
+}
+
+.empty{
+padding:35px 15px;
+text-align:center;
+color:#777782;
+font-size:11px;
+}
+
+.empty-icon{
+margin-bottom:9px;
+font-size:30px;
+}
+
+.muted{
+color:#777782;
+font-size:10px;
+}
+
+.toast{
+position:fixed;
+left:50%;
+bottom:91px;
+z-index:200;
+max-width:calc(100% - 30px);
+padding:11px 14px;
+transform:translate(-50%,15px);
+opacity:0;
+pointer-events:none;
+border-radius:12px;
+background:#25252e;
+border:1px solid rgba(255,255,255,.08);
+box-shadow:0 12px 35px rgba(0,0,0,.35);
+font-size:10px;
+transition:.2s;
+}
+
+.toast.show{
+opacity:1;
+transform:translate(-50%,0);
+}
+
+/* ДОБАВЛЕНО ТОЛЬКО ДЛЯ СОБСТВЕННОГО ВАРИАНТА ЗАЛОГА */
+
+.custom-deposit-btn{
+width:100%;
+display:flex;
+align-items:center;
+gap:10px;
+padding:12px;
+margin-top:10px;
+margin-bottom:12px;
+text-align:left;
+border-radius:14px;
+background:#181820;
+border:1px solid rgba(112,103,255,.25);
+color:white;
+}
+
+.custom-deposit-btn-icon{
+width:40px;
+height:40px;
+flex:0 0 40px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:11px;
+background:rgba(112,103,255,.12);
+color:#aaa4ff;
+font-size:21px;
+}
+
+.custom-deposit-btn-text{
+flex:1;
+min-width:0;
+}
+
+.custom-deposit-btn-text strong{
+display:block;
+font-size:11px;
+}
+
+.custom-deposit-btn-text span{
+display:block;
+margin-top:3px;
+color:#777782;
+font-size:9px;
+}
+
+.trade-order{
+padding:12px;
+margin:10px 0;
+border-radius:13px;
+background:#181820;
+color:#92929d;
+font-size:10px;
+line-height:1.55;
+}
+
+.trade-order strong{
+color:#d8d8de;
+}
+
+.custom-deposit-selected{
+display:flex;
+align-items:center;
+gap:10px;
+padding:12px;
+margin:10px 0;
+border-radius:14px;
+background:rgba(112,103,255,.09);
+border:1px solid rgba(112,103,255,.18);
+}
+
+.custom-deposit-selected .pet-avatar{
+width:42px;
+height:42px;
+flex:0 0 42px;
+}
+
+.custom-deposit-selected-info{
+flex:1;
+min-width:0;
+}
+
+.custom-deposit-selected-info strong{
+display:block;
+font-size:11px;
+}
+
+.custom-deposit-selected-info span{
+display:block;
+margin-top:3px;
+color:#858590;
+font-size:9px;
+}
+
+@media(max-width:380px){
+
+.hero-buttons{
+grid-template-columns:1fr;
+}
+
+.variants{
+grid-template-columns:repeat(3,1fr);
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header class="header">
+
+<div class="brand">
+
+<div class="brand-logo">
+🐾
+</div>
+
+<div>
+
+<div class="brand-name">
+Adopt Rent
+</div>
+
+<div class="brand-subtitle">
+Аренда питомцев Adopt Me
+</div>
+
+</div>
+
+</div>
+
+<div class="online">
+<span class="online-dot">●</span>
+<span id="onlineCount">43 онлайн</span>
+</div>
+
+</header>
+
+<section
+class="screen active"
+id="screen-home"
+>
+
+<div class="hero">
+
+<div class="hero-badge">
+🐾 Сервис аренды питомцев
+</div>
+
+<h1>
+Арендуй питомца<br>
+на 24 часа
+</h1>
+
+<p>
+Выбери питомца, вариант и предложение владельца.
+При аренде стоимость оплачивается в Stars, а залог предоставляется отдельно в виде твоего питомца.
+</p>
+
+<div class="hero-buttons">
+
+<button
+class="primary-btn"
+onclick="startRent()"
+>
+🐾 Взять питомца
+</button>
+
+<button
+class="secondary-btn"
+onclick="startSupply()"
+>
+📦 Сдать питомца
+</button>
+
+</div>
+
+</div>
+
+<div class="section-title">
+<h2>Как это работает</h2>
+<span>24 часа</span>
+</div>
+
+<div class="info-grid">
+
+<div class="info-card">
+
+<div class="info-icon">
+🔎
+</div>
+
+<strong>
+Выбери питомца
+</strong>
+
+<p>
+Найди нужного питомца и выбери его вариант.
+</p>
+
+</div>
+
+<div class="info-card">
+
+<div class="info-icon">
+⭐
+</div>
+
+<strong>
+Оплати аренду
+</strong>
+
+<p>
+Стоимость аренды оплачивается Telegram Stars.
+</p>
+
+</div>
+
+<div class="info-card">
+
+<div class="info-icon">
+🐾
+</div>
+
+<strong>
+Дай залог питомцем
+</strong>
+
+<p>
+Залог предоставляется владельцу в виде другого твоего питомца.
+</p>
+
+</div>
+
+<div class="info-card">
+
+<div class="info-icon">
+↩️
+</div>
+
+<strong>
+Верни всё
+</strong>
+
+<p>
+После окончания аренды возвращается арендованный питомец, а залог — его владельцу.
+</p>
+
+</div>
+
+</div>
+
+<div class="section-title">
+<h2>Для владельцев</h2>
+<span>Сдай своего пета</span>
+</div>
+
+<div class="steps">
+
+<div class="step">
+<div class="step-number">1</div>
+<div class="step-content">
+<strong>Выбери питомца</strong>
+<span>Укажи питомца и его вариант.</span>
+</div>
+</div>
+
+<div class="step">
+<div class="step-number">2</div>
+<div class="step-content">
+<strong>Установи свою цену</strong>
+<span>Самостоятельно укажи стоимость аренды в Telegram Stars.</span>
+</div>
+</div>
+
+<div class="step">
+<div class="step-number">3</div>
+<div class="step-content">
+<strong>Отправь заявку</strong>
+<span>Заявка поступит на проверку.</span>
+</div>
+</div>
+
+<div class="step">
+<div class="step-number">4</div>
+<div class="step-content">
+<strong>Получи выплату</strong>
+<span>После завершения аренды из стоимости аренды удерживается комиссия 10%.</span>
+</div>
+</div>
+
+</div>
+
+</section>
+
+<section
+class="screen"
+id="screen-applications"
+>
+
+<div class="section-title">
+
+<h2>
+Мои заявки
+</h2>
+
+<span id="applicationCount">
+0
+</span>
+
+</div>
+
+<div id="applicationsList">
+</div>
+
+</section>
+
+<section
+class="screen"
+id="screen-support"
+>
+
+<div class="section-title">
+<h2>Поддержка</h2>
+</div>
+
+<div class="support-box">
+
+<div class="support-icon">
+💬
+</div>
+
+<h2>
+Нужна помощь?
+</h2>
+
+<p>
+Вопрос по аренде, передаче питомца, залогу, оплате или заявке?
+Напиши в поддержку.
+</p>
+
+<button
+class="primary-btn full-btn"
+onclick="openSupport()"
+>
+Открыть поддержку
+</button>
+
+</div>
+
+<div class="card">
+
+<h3 class="card-title">
+Передача питомцев
+</h3>
+
+<p class="card-subtitle">
+Стандартное время передачи — 17:30–18:00 по Москве.
+Доступны слоты с шагом 5 минут.
+</p>
+
+</div>
+
+<div class="card">
+
+<h3 class="card-title">
+🔐 Залог
+</h3>
+
+<p class="card-subtitle">
+Залог при аренде предоставляется не деньгами и не Stars, а другим питомцем арендатора.
+Конкретный питомец-залог указывается до подтверждения аренды.
+</p>
+
+</div>
+
+</section>
+
+<section
+class="screen"
+id="screen-profile"
+>
+
+<div class="section-title">
+<h2>Профиль</h2>
+</div>
+
+<div class="profile-head">
+
+<div
+class="profile-avatar"
+id="profileAvatar"
+>
+U
+</div>
+
+<div class="profile-info">
+
+<strong id="profileName">
+Пользователь
+</strong>
+
+<span id="profileUsername">
+Telegram
+</span>
+
+</div>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<strong id="statRent">0</strong>
+<span>Аренд</span>
+</div>
+
+<div class="stat">
+<strong id="statSupply">0</strong>
+<span>Сдано</span>
+</div>
+
+<div class="stat">
+<strong id="statCompleted">0</strong>
+<span>Завершено</span>
+</div>
+
+</div>
+
+<div class="card" style="margin-top:10px">
+
+<h3 class="card-title">
+Telegram
+</h3>
+
+<p
+class="card-subtitle"
+id="profileTelegram"
+>
+Открой приложение через Telegram.
+</p>
+
+</div>
+
+</section>
+
+</div>
+
+<nav class="bottom-nav">
+
+<button
+class="nav-item active"
+id="nav-home"
+onclick="showScreen('home')"
+>
+
+<span class="nav-icon">⌂</span>
+<span class="nav-label">Главная</span>
+
+</button>
+
+<button
+class="nav-item"
+id="nav-applications"
+onclick="showScreen('applications')"
+>
+
+<span class="nav-icon">📋</span>
+<span class="nav-label">Заявки</span>
+
+</button>
+
+<button
+class="nav-item"
+id="nav-support"
+onclick="showScreen('support')"
+>
+
+<span class="nav-icon">💬</span>
+<span class="nav-label">Поддержка</span>
+
+</button>
+
+<button
+class="nav-item"
+id="nav-profile"
+onclick="showScreen('profile')"
+>
+
+<span class="nav-icon">👤</span>
+<span class="nav-label">Профиль</span>
+
+</button>
+
+</nav>
+
+<div
+class="overlay"
+id="overlay"
+>
+
+<div class="modal">
+
+<div class="modal-head">
+
+<h2 id="modalTitle">
+Adopt Rent
+</h2>
+
+<button
+class="close"
+onclick="closeModal()"
+>
+×
+</button>
+
+</div>
+
+<div id="modalContent"></div>
+
+</div>
+
+</div>
+
+<div
+class="toast"
+id="toast"
+></div>
+
+<script>
+
+const CONFIG={
+
+APP_NAME:"Adopt Rent",
+
+RENTAL_HOURS:24,
+
+COMMISSION:10,
+
+SUPPORT_BOT:"Adoptrent_support_bot",
+
+SUPPLIER_ROBLOX:"Jaff11223",
+
+FORM_ENDPOINT:"https://formspree.io/f/mnpqyeyl",
+
+STORAGE_KEY:"adopt_rent_price_deposit_pet_v15",
+
+HANDOVER_FROM:"17:30",
+
+HANDOVER_TO:"18:00",
+
+SLOT_MINUTES:5,
+
+MIN_PRICE:5,
+
+MAX_PRICE:2000
+
+};
+
+const tg=
+window.Telegram?.WebApp||null;
+
+try{
+
+tg?.ready();
+tg?.expand();
+
+}catch(e){
+
+console.log(e);
+
+}
+
+const RAW_PETS=[
+
+["shadow_dragon","Shadow Dragon","🌑",150],
+["bat_dragon","Bat Dragon","🐉",140],
+["frost_dragon","Frost Dragon","❄️",120],
+["giraffe","Giraffe","🦒",110],
+["owl","Owl","🦉",100],
+["parrot","Parrot","🦜",90],
+["evil_unicorn","Evil Unicorn","🦄",80],
+["crow","Crow","🐦",75],
+["arctic_reindeer","Arctic Reindeer","🦌",70],
+["hedgehog","Hedgehog","🦔",65],
+["dalmatian","Dalmatian","🐶",60],
+["lion","Lion","🦁",55],
+["turtle","Turtle","🐢",50],
+["kangaroo","Kangaroo","🦘",48],
+["cow","Cow","🐄",45],
+["elephant","Elephant","🐘",43],
+["hyena","Hyena","🐾",42],
+["flamingo","Flamingo","🦩",40],
+["albino_monkey","Albino Monkey","🐒",38],
+["monkey_king","Monkey King","👑",37],
+["arctic_fox","Arctic Fox","🦊",35],
+["pink_cat","Pink Cat","🐱",34],
+["blue_dog","Blue Dog","🐶",34],
+["zombie_buffalo","Zombie Buffalo","🦬",33],
+["brown_bear","Brown Bear","🐻",32],
+["polar_bear","Polar Bear","🐻‍❄️",31],
+["reindeer","Reindeer","🦌",30],
+["shrew","Shrew","🐭",29],
+["turkey","Turkey","🦃",28],
+["swan","Swan","🦢",27],
+["llama","Llama","🦙",26],
+["platypus","Platypus","🦆",25],
+["crocodile","Crocodile","🐊",24],
+["rhino","Rhino","🦏",23],
+["puffin","Puffin","🐧",22],
+["goat","Goat","🐐",21],
+["pig","Pig","🐷",20],
+["horse","Horse","🐴",19],
+["ghost_bunny","Ghost Bunny","👻",16],
+["frost_fury","Frost Fury","🐲",15],
+["lavender_dragon","Lavender Dragon","💜",14],
+["phoenix","Phoenix","🔥",13],
+["diamond_albatross","Diamond Albatross","🪽",12],
+["golden_albatross","Golden Albatross","🪽",11],
+["albatross","Albatross","🪽",10],
+["golden_penguin","Golden Penguin","🐧",10],
+["king_bee","King Bee","🐝",9],
+["queen_bee","Queen Bee","👑",9],
+["ninja_monkey","Ninja Monkey","🥷",9],
+["dodo","Dodo","🦤",8],
+["trex","T-Rex","🦖",8],
+["shark","Shark","🦈",8],
+["octopus","Octopus","🐙",8],
+["skeleton_trex","Skeleton T-Rex","🦖",8],
+["goldhorn","Goldhorn","🦌",7],
+["golden_phoenix","Golden Phoenix","🔥",7],
+["snow_owl","Snow Owl","🦉",7],
+["unicorn","Unicorn","🦄",7],
+["dragon","Dragon","🐉",7],
+["griffin","Griffin","🦅",6],
+["kitsune","Kitsune","🦊",6],
+["cerberus","Cerberus","🐕",6],
+["axolotl","Axolotl","🦎",6],
+["red_panda","Red Panda","🐼",5],
+["shiba","Shiba Inu","🐕",5],
+["toucan","Toucan","🦜",5],
+["sloth","Sloth","🦥",5],
+["koala","Koala","🐨",5],
+["frog","Frog","🐸",5],
+["beaver","Beaver","🦫",5],
+["rabbit","Rabbit","🐰",5],
+["bunny","Bunny","🐇",5],
+["poodle","Poodle","🐩",5],
+["ginger_cat","Ginger Cat","🐈",5],
+["snow_cat","Snow Cat","🐈",5],
+["monkey","Monkey","🐒",5],
+["penguin","Penguin","🐧",5],
+["ladybug","Ladybug","🐞",5],
+["bee","Bee","🐝",5],
+["starfish","Starfish","⭐",5],
+["dolphin","Dolphin","🐬",5],
+["narwhal","Narwhal","🐋",5],
+["crab","Crab","🦀",5],
+["walrus","Walrus","🦭",5],
+["seal","Seal","🦭",5],
+["badger","Badger","🦡",5],
+["saber_tooth","Saber Tooth","🐯",5],
+["wolf","Wolf","🐺",5],
+["corgi","Corgi","🐶",5],
+["spaniel","Spaniel","🐶",5],
+["persian_cat","Persian Cat","🐱",5],
+["maneki_neko","Maneki Neko","🐱",5],
+["robot","Robot","🤖",5],
+["space_whale","Space Whale","🐋",5],
+["lava_dragon","Lava Dragon","🐉",5],
+["winged_horse","Winged Horse","🐴",5],
+["diamond_dragon","Diamond Dragon","💎",5],
+["golden_dragon","Golden Dragon","🐉",5],
+["golden_unicorn","Golden Unicorn","🦄",5],
+["golden_griffin","Golden Griffin","🦅",5]
+
+];
+
+const PETS=
+RAW_PETS.map(
+x=>({
+id:x[0],
+name:x[1],
+emoji:x[2],
+value:x[3]
+})
+);
+
+function pet(id){
+
+return PETS.find(
+p=>p.id===id
+);
+
+}
+
+function isRentablePet(p){
+
+return !!p&&p.value>=4;
+
+}
+
+function isSupplyPet(p){
+
+return !!p&&p.value>4;
+
+}
+
+const VARIANT_MULTIPLIERS={
+
+Normal:1,
+F:1.12,
+R:1.12,
+FR:1.27,
+N:1.43,
+NF:1.60,
+NR:1.60,
+NFR:1.82,
+M:2.48,
+MF:2.75,
+MR:2.75,
+MFR:3.05
+
+};
+
+function variantTier(v){
+
+if(v.startsWith("M"))return"M";
+
+if(v.startsWith("N"))return"N";
+
+return"Normal";
+
+}
+
+function variantHasF(v){
+
+return v.includes("F");
+
+}
+
+function variantHasR(v){
+
+return v.includes("R");
+
+}
+
+function makeVariant(
+tier,
+f,
+r
+){
+
+if(tier==="Normal"){
+
+if(f&&r)return"FR";
+if(f)return"F";
+if(r)return"R";
+
+return"Normal";
+
+}
+
+if(tier==="N"){
+
+if(f&&r)return"NFR";
+if(f)return"NF";
+if(r)return"NR";
+
+return"N";
+
+}
+
+if(tier==="M"){
+
+if(f&&r)return"MFR";
+if(f)return"MF";
+if(r)return"MR";
+
+return"M";
+
+}
+
+return"Normal";
+
+}
+
+function availableVariants(p){
+
+const list=[
+"Normal",
+"F",
+"R",
+"FR"
+];
+
+if(p.value>=5){
+
+list.push(
+"N",
+"NF",
+"NR",
+"NFR"
+);
+
+}
+
+if(p.value>=8){
+
+list.push(
+"M",
+"MF",
+"MR",
+"MFR"
+);
+
+}
+
+return list;
+
+}
+
+const ANCHOR_PRICES={
+
+shadow_dragon:520,
+bat_dragon:495,
+frost_dragon:450,
+giraffe:415,
+owl:380,
+parrot:345,
+evil_unicorn:310,
+crow:295,
+arctic_reindeer:275,
+hedgehog:255,
+dalmatian:235,
+lion:215,
+turtle:195,
+kangaroo:185,
+cow:175,
+elephant:165,
+hyena:160,
+flamingo:150,
+albino_monkey:145,
+monkey_king:140
+
+};
+
+function suggestedPrice(
+p,
+variant
+){
+
+if(!p)return CONFIG.MIN_PRICE;
+
+const base=
+ANCHOR_PRICES[p.id]||
+Math.max(
+CONFIG.MIN_PRICE,
+Math.round(p.value*4.2)
+);
+
+return Math.max(
+CONFIG.MIN_PRICE,
+Math.min(
+CONFIG.MAX_PRICE,
+Math.round(
+base*
+(
+VARIANT_MULTIPLIERS[variant]||1
+)
+)
+)
+);
+
+}
+
+const SELLERS=[
+"AdoptRent",
+"PetOwner",
+"RentMaster",
+"PetVault",
+"LuckyOwner",
+"DreamPets",
+"RentHouse",
+"PetMarket"
+];
+
+function hashCode(str){
+
+let hash=0;
+
+for(
+let i=0;
+i<str.length;
+i++
+){
+
+hash=
+((hash<<5)-hash)+
+str.charCodeAt(i);
+
+hash|=0;
+
+}
+
+return Math.abs(hash);
+
+}
+
+/*
+РЕАЛЬНЫЕ ПРЕДЛОЖЕНИЯ:
+если supply-заявка имеет status="available",
+она попадает в аренду со своей ценой.
+
+Залог здесь НЕ Stars.
+Залогом является питомец арендатора.
+*/
+
+function getRealOffers(
+petId,
+variant
+){
+
+return applications
+.filter(
+a=>
+a.type==="supply"&&
+a.petId===petId&&
+a.variant===variant&&
+a.status==="available"
+)
+.map(
+a=>({
+
+id:a.id,
+
+seller:
+a.telegramUsername
+?
+"@"+a.telegramUsername
+:
+a.telegramFirstName||
+"Владелец",
+
+price:
+a.price,
+
+depositType:
+"pet",
+
+ownerApplicationId:
+a.id
+
+})
+);
+
+}
+
+function demoOffers(
+petId,
+variant
+){
+
+const p=
+pet(petId);
+
+if(!p)return[];
+
+const base=
+suggestedPrice(
+p,
+variant
+);
+
+const result=[];
+
+for(
+let i=0;
+i<4;
+i++
+){
+
+const seller=
+SELLERS[
+hashCode(
+petId+
+variant+
+i
+)%SELLERS.length
+];
+
+const difference=[
+-.05,
+-.015,
+.025,
+.055
+][i];
+
+result.push({
+
+id:
+"demo_"+
+petId+
+"_"+variant+
+"_"+i,
+
+seller:seller,
+
+price:
+Math.max(
+CONFIG.MIN_PRICE,
+Math.round(
+base*(1+difference)
+)
+),
+
+depositType:"pet",
+
+demo:true
+
+});
+
+}
+
+return result;
+
+}
+
+function offers(
+petId,
+variant
+){
+
+const real=
+getRealOffers(
+petId,
+variant
+);
+
+if(real.length){
+
+return real;
+
+}
+
+return demoOffers(
+petId,
+variant
+);
+
+}
+
+function loadApplications(){
+
+try{
+
+const raw=
+localStorage.getItem(
+CONFIG.STORAGE_KEY
+);
+
+if(raw){
+
+const data=
+JSON.parse(raw);
+
+if(Array.isArray(data)){
+
+return data;
+
+}
+
+}
+
+}catch(e){
+
+console.log(e);
+
+}
+
+return[];
+
+}
+
+let applications=
+loadApplications();
+
+function saveApplications(){
+
+try{
+
+localStorage.setItem(
+CONFIG.STORAGE_KEY,
+JSON.stringify(
+applications
+)
+);
+
+}catch(e){
+
+console.log(e);
+
+}
+
+renderApplications();
+renderProfile();
+
+}
+
+function generateId(
+prefix
+){
+
+return prefix+
+"_"+
+Date.now().toString(36)+
+"_"+
+Math.random()
+.toString(36)
+.slice(2,8);
+
+}
+
+function telegramUser(){
+
+try{
+
+return tg?.initDataUnsafe?.user||null;
+
+}catch(e){
+
+return null;
+
+}
+
+}
+
+function getProfile(){
+
+const user=
+telegramUser();
+
+if(user){
+
+return{
+
+id:user.id||null,
+
+firstName:
+user.first_name||
+"Пользователь",
+
+lastName:
+user.last_name||
+"",
+
+username:
+user.username||
+""
+
+};
+
+}
+
+return{
+
+id:null,
+
+firstName:"Пользователь",
+
+lastName:"",
+
+username:""
+
+};
+
+}
+
+function showScreen(name){
+
+document
+.querySelectorAll(".screen")
+.forEach(
+s=>s.classList.remove("active")
+);
+
+document
+.getElementById(
+"screen-"+name
+)
+?.classList.add("active");
+
+document
+.querySelectorAll(".nav-item")
+.forEach(
+n=>n.classList.remove("active")
+);
+
+document
+.getElementById(
+"nav-"+name
+)
+?.classList.add("active");
+
+if(name==="applications"){
+renderApplications();
+}
+
+if(name==="profile"){
+renderProfile();
+}
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+
+function openModal(
+title,
+html
+){
+
+document
+.getElementById(
+"modalTitle"
+)
+.textContent=title;
+
+document
+.getElementById(
+"modalContent"
+)
+.innerHTML=html;
+
+document
+.getElementById(
+"overlay"
+)
+.classList.add("open");
+
+document.body.style.overflow="hidden";
+
+}
+
+function closeModal(){
+
+document
+.getElementById(
+"overlay"
+)
+.classList.remove("open");
+
+document.body.style.overflow="";
+
+}
+
+let toastTimer=null;
+
+function showToast(
+message
+){
+
+const toast=
+document.getElementById(
+"toast"
+);
+
+toast.textContent=
+message;
+
+toast.classList.add("show");
+
+clearTimeout(
+toastTimer
+);
+
+toastTimer=
+setTimeout(
+()=>{
+toast.classList.remove("show");
+},
+2800
+);
+
+}
+
+let online=43;
+
+function updateOnline(){
+
+online+=
+Math.floor(
+Math.random()*7
+)-3;
+
+online=
+Math.max(
+28,
+Math.min(
+72,
+online
+)
+);
+
+document
+.getElementById(
+"onlineCount"
+)
+.textContent=
+online+
+" онлайн";
+
+}
+
+function scheduleOnline(){
+
+setTimeout(
+()=>{
+updateOnline();
+scheduleOnline();
+},
+10000+
+Math.floor(
+Math.random()*20000
+)
+);
+
+}
+
+scheduleOnline();
+
+let currentRentPet=null;
+
+let currentRentVariant="Normal";
+
+let currentRentOffer=null;
+
+let currentRentDate="";
+
+let currentRentTime="";
+
+let currentRentDepositPet=null;
+
+/* ДОБАВЛЕНО: собственный залог */
+
+let currentRentCustomDeposit=false;
+
+let currentRentCustomDepositName="";
+
+let currentRentCustomDepositEmoji="🐾";
+
+let currentRentCustomDepositVariant="Normal";
+
+function startRent(){
+
+openModal(
+"Правила аренды",
+`
+
+<div class="rules">
+
+<h3>
+Условия аренды
+</h3>
+
+<p>
+<strong>1. Срок.</strong><br>
+Аренда оформляется на 24 часа.
+</p>
+
+<p>
+<strong>2. Оплата.</strong><br>
+Стоимость аренды оплачивается в Telegram Stars до передачи питомца.
+</p>
+
+<p>
+<strong>3. Залог.</strong><br>
+Залог предоставляется НЕ деньгами и НЕ Stars.
+Арендатор передаёт владельцу другого своего питомца в качестве залога.
+</p>
+
+<p>
+<strong>4. Возврат залога.</strong><br>
+После корректного возврата арендованного питомца залоговый питомец возвращается арендатору согласно условиям заявки.
+</p>
+
+<p>
+<strong>5. Ответственность.</strong><br>
+После получения арендованного питомца арендатор отвечает за его сохранность до возврата.
+</p>
+
+<p>
+<strong>6. Запрет передачи.</strong><br>
+Нельзя продавать, обменивать, передавать третьим лицам или использовать арендованного питомца как залог.
+</p>
+
+<p>
+<strong>7. Запрет изменения.</strong><br>
+Нельзя изменять состояние арендованного питомца, объединять его, обменивать или совершать с ним другие действия, нарушающие условия аренды.
+</p>
+
+<p>
+<strong>8. Возврат.</strong><br>
+По окончании 24 часов арендованный питомец возвращается владельцу.
+</p>
+
+<p>
+<strong>9. Передача.</strong><br>
+Стандартное время передачи:
+${CONFIG.HANDOVER_FROM}–${CONFIG.HANDOVER_TO} по Москве.
+</p>
+
+</div>
+
+<div class="notice">
+
+🐾 Для оформления аренды тебе понадобится собственный питомец,
+который будет передан владельцу арендованного питомца в качестве залога.
+
+</div>
+
+<div class="checkbox-row">
+
+<input
+type="checkbox"
+id="rentRulesAgree"
+>
+
+<label for="rentRulesAgree">
+Я ознакомился(ась) с правилами аренды и понимаю, что залог предоставляется в виде моего питомца.
+</label>
+
+</div>
+
+<button
+class="primary-btn full-btn"
+onclick="continueRentRules()"
+>
+Продолжить
+</button>
+
+`
+);
+
+}
+
+function continueRentRules(){
+
+if(
+!document
+.getElementById(
+"rentRulesAgree"
+)?.checked
+){
+
+showToast(
+"Подтверди правила аренды"
+);
+
+return;
+
+}
+
+renderRentPetPicker();
+
+}
+
+function renderRentPetPicker(
+query=""
+){
+
+const q=
+query
+.trim()
+.toLowerCase();
+
+const list=
+PETS.filter(
+p=>
+isRentablePet(p)&&
+p.name
+.toLowerCase()
+.includes(q)
+);
+
+openModal(
+"Выберите питомца",
+`
+
+<input
+class="search"
+placeholder="Поиск питомца..."
+value="${escapeHtml(query)}"
+oninput="renderRentSearch(this.value)"
+>
+
+<div
+class="pet-list"
+id="rentPetList"
+>
+${renderPetOptions(
+list,
+"rent"
+)}
+</div>
+
+`
+);
+
+}
+
+function renderRentSearch(
+query
+){
+
+const q=
+query
+.trim()
+.toLowerCase();
+
+const list=
+PETS.filter(
+p=>
+isRentablePet(p)&&
+p.name
+.toLowerCase()
+.includes(q)
+);
+
+const box=
+document.getElementById(
+"rentPetList"
+);
+
+if(box){
+
+box.innerHTML=
+renderPetOptions(
+list,
+"rent"
+);
+
+}
+
+}
+
+function renderPetOptions(
+list,
+type
+){
+
+if(!list.length){
+
+return`
+
+<div class="empty">
+<div class="empty-icon">🔎</div>
+Питомец не найден
+</div>
+
+`;
+
+}
+
+return list
+.map(
+p=>`
+
+<button
+class="pet-option"
+onclick="${
+type==="rent"
+?
+`selectRentPet('${p.id}')`
+:
+`selectSupplyPet('${p.id}')`
+}"
+>
+
+<div class="pet-avatar">
+${p.emoji}
+</div>
+
+<div class="pet-option-info">
+
+<strong>
+${escapeHtml(p.name)}
+</strong>
+
+<span>
+Доступен
+</span>
+
+</div>
+
+<div class="pet-option-price">
+
+<strong>
+от ${suggestedPrice(p,"Normal")} ⭐
+</strong>
+
+<span>
+24 часа
+</span>
+
+</div>
+
+</button>
+
+`
+)
+.join("");
+
+}
+
+function selectRentPet(
+id
+){
+
+const p=
+pet(id);
+
+if(!p){
+
+showToast(
+"Питомец не найден"
+);
+
+return;
+
+}
+
+currentRentPet=p;
+
+currentRentVariant="Normal";
+
+currentRentOffer=null;
+
+currentRentDepositPet=null;
+
+/* Сбрасываем собственный залог */
+
+currentRentCustomDeposit=false;
+
+currentRentCustomDepositName="";
+
+currentRentCustomDepositEmoji="🐾";
+
+currentRentCustomDepositVariant="Normal";
+
+renderRentVariant();
+
+}
+
+function renderRentVariant(){
+
+const p=
+currentRentPet;
+
+const variants=
+availableVariants(p);
+
+openModal(
+"Вариант питомца",
+`
+
+<div class="card">
+
+<div
+style="
+display:flex;
+align-items:center;
+gap:11px
+"
+>
+
+<div class="pet-avatar">
+${p.emoji}
+</div>
+
+<div>
+
+<strong>
+${escapeHtml(p.name)}
+</strong>
+
+<div class="muted">
+Выбери вариант
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="variants">
+
+${renderVariantButton(
+"Normal",
+"Обычный",
+variants,
+currentRentVariant,
+"rent"
+)}
+
+${renderVariantButton(
+"F",
+"F",
+variants,
+currentRentVariant,
+"rent"
+)}
+
+${renderVariantButton(
+"R",
+"R",
+variants,
+currentRentVariant,
+"rent"
+)}
+
+${renderVariantButton(
+"N",
+"N",
+variants,
+currentRentVariant,
+"rent"
+)}
+
+${renderVariantButton(
+"M",
+"M",
+variants,
+currentRentVariant,
+"rent"
+)}
+
+</div>
+
+<div class="notice">
+
+F — Fly.
+R — Ride.
+N — Neon.
+M — Mega Neon.
+
+</div>
+
+<button
+class="primary-btn full-btn"
+onclick="showRentOffers()"
+>
+Показать предложения
+</button>
+
+`
+);
+
+}
+
+function renderVariantButton(
+value,
+label,
+variants,
+current,
+type
+){
+
+const tier=
+variantTier(current);
+
+let active=false;
+
+if(value==="Normal")
+active=tier==="Normal";
+
+if(value==="N")
+active=tier==="N";
+
+if(value==="M")
+active=tier==="M";
+
+if(value==="F")
+active=variantHasF(current);
+
+if(value==="R")
+active=variantHasR(current);
+
+const disabled=
+(
+value==="N"||
+value==="M"
+)&&
+!variants.includes(value);
+
+let cls="variant";
+
+if(value==="F")cls+=" variant-f";
+
+if(value==="R")cls+=" variant-r";
+
+if(value==="N")cls+=" variant-n";
+
+if(value==="M")cls+=" variant-m";
+
+if(active)cls+=" active";
+
+if(disabled)cls+=" disabled";
+
+return`
+
+<button
+class="${cls}"
+${disabled?"disabled":""}
+onclick="${
+type==="rent"
+?
+`setRentVariant('${value}')`
+:
+`setSupplyVariant('${value}')`
+}"
+>
+${label}
+</button>
+
+`;
+
+}
+
+function setRentVariant(
+value
+){
+
+if(value==="F"){
+
+currentRentVariant=
+makeVariant(
+variantTier(
+currentRentVariant
+),
+!variantHasF(
+currentRentVariant
+),
+variantHasR(
+currentRentVariant
+)
+);
+
+}
+
+else if(value==="R"){
+
+currentRentVariant=
+makeVariant(
+variantTier(
+currentRentVariant
+),
+variantHasF(
+currentRentVariant
+),
+!variantHasR(
+currentRentVariant
+)
+);
+
+}
+
+else{
+
+currentRentVariant=
+makeVariant(
+value,
+variantHasF(
+currentRentVariant
+),
+variantHasR(
+currentRentVariant
+)
+);
+
+}
+
+renderRentVariant();
+
+}
+
+function showRentOffers(){
+
+const list=
+offers(
+currentRentPet.id,
+currentRentVariant
+);
+
+openModal(
+"Предложения",
+`
+
+<div class="card">
+
+<div
+style="
+display:flex;
+align-items:center;
+gap:10px
+"
+>
+
+<div class="pet-avatar">
+${currentRentPet.emoji}
+</div>
+
+<div>
+
+<strong>
+${escapeHtml(currentRentPet.name)}
+</strong>
+
+<div class="muted">
+${currentRentVariant} · 24 часа
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="notice">
+
+🐾 Залогом является твой питомец.
+Перед получением арендованного питомца ты должен передать владельцу выбранного залогового питомца.
+
+</div>
+
+<div class="offer-list">
+
+${list
+.map(
+o=>`
+
+<button
+class="offer"
+onclick="selectRentOffer('${o.id}')"
+>
+
+<div class="offer-info">
+
+<strong>
+${escapeHtml(o.seller)}
+</strong>
+
+<span>
+Залог: твой питомец
+</span>
+
+</div>
+
+<div class="offer-price">
+${o.price} ⭐
+</div>
+
+</button>
+
+`
+)
+.join("")}
+
+</div>
+
+`
+);
+
+}
+
+function selectRentOffer(
+id
+){
+
+const list=
+offers(
+currentRentPet.id,
+currentRentVariant
+);
+
+currentRentOffer=
+list.find(
+x=>x.id===id
+);
+
+if(!currentRentOffer){
+
+showToast(
+"Предложение не найдено"
+);
+
+return;
+
+}
+
+renderRentDepositPetPicker();
+
+}
+
+function renderRentDepositPetPicker(
+query=""
+){
+
+const q=
+query
+.trim()
+.toLowerCase();
+
+const list=
+PETS.filter(
+p=>
+isRentablePet(p)&&
+p.id!==currentRentPet.id&&
+p.name
+.toLowerCase()
+.includes(q)
+);
+
+openModal(
+"Выбери питомца-залог",
+`
+
+<div class="card">
+
+<div class="card-title">
+🐾 Залог предоставляется питомцем
+</div>
+
+<p class="card-subtitle">
+Выбери другого питомца из своего инвентаря.
+Именно этот питомец будет передан владельцу арендованного питомца в качестве залога.
+</p>
+
+</div>
+
+<div class="trade-order">
+
+<strong>
+Порядок трейдов
+</strong>
+<br>
+
+1-й трейд — ты передаёшь выбранного питомца-залога.
+<br>
+
+2-й трейд — после этого ты получаешь арендованного питомца.
+
+</div>
+
+<input
+class="search"
+placeholder="Поиск питомца-залога..."
+value="${escapeHtml(query)}"
+oninput="renderRentDepositSearch(this.value)"
+>
+
+<div
+class="deposit-choice"
+id="depositPetList"
+>
+
+${renderDepositPetOptions(list)}
+
+</div>
+
+<button
+type="button"
+class="custom-deposit-btn"
+onclick="openCustomDepositModal()"
+>
+
+<div class="custom-deposit-btn-icon">
+＋
+</div>
+
+<div class="custom-deposit-btn-text">
+
+<strong>
+Ввести свой вариант залога
+</strong>
+
+<span>
+Если нужного питомца нет в списке
+</span>
+
+</div>
+
+</button>
+
+`
+);
+
+}
+
+function renderRentDepositSearch(
+query
+){
+
+const q=
+query
+.trim()
+.toLowerCase();
+
+const list=
+PETS.filter(
+p=>
+isRentablePet(p)&&
+p.id!==currentRentPet.id&&
+p.name
+.toLowerCase()
+.includes(q)
+);
+
+const box=
+document.getElementById(
+"depositPetList"
+);
+
+if(box){
+
+box.innerHTML=
+renderDepositPetOptions(
+list
+);
+
+}
+
+}
+
+function renderDepositPetOptions(
+list
+){
+
+if(!list.length){
+
+return`
+
+<div class="empty">
+<div class="empty-icon">🐾</div>
+Подходящий питомец не найден
+</div>
+
+`;
+
+}
+
+return list
+.map(
+p=>`
+
+<button
+class="deposit-option"
+onclick="selectRentDepositPet('${p.id}')"
+>
+
+<div class="pet-avatar">
+${p.emoji}
+</div>
+
+<div class="deposit-option-info">
+
+<strong>
+${escapeHtml(p.name)}
+</strong>
+
+<span>
+Будет использован как залог
+</span>
+
+</div>
+
+<div class="deposit-check">
+›
+</div>
+
+</button>
+
+`
+)
+.join("");
+
+}
+
+function selectRentDepositPet(
+id
+){
+
+const p=
+pet(id);
+
+if(!p){
+
+showToast(
+"Питомец не найден"
+);
+
+return;
+
+}
+
+if(
+currentRentPet&&
+p.id===currentRentPet.id
+){
+
+showToast(
+"Арендованный питомец не может быть залогом"
+);
+
+return;
+
+}
+
+currentRentDepositPet=p;
+
+currentRentCustomDeposit=false;
+
+currentRentCustomDepositName="";
+
+currentRentCustomDepositEmoji="🐾";
+
+currentRentCustomDepositVariant="Normal";
+
+renderRentDate();
+
+}
+
+/* =========================================================
+СОБСТВЕННЫЙ ВАРИАНТ ЗАЛОГА
+========================================================= */
+
+function openCustomDepositModal(){
+
+currentRentCustomDepositName="";
+
+currentRentCustomDepositVariant="Normal";
+
+const variants=[
+"Normal",
+"F",
+"R",
+"FR",
+"N",
+"NF",
+"NR",
+"NFR",
+"M",
+"MF",
+"MR",
+"MFR"
+];
+
+const variantButtons=
+variants
+.map(
+v=>`
+
+<button
+type="button"
+class="variant"
+onclick="selectCustomDepositVariant('${v}',this)"
+>
+${v}
+</button>
+
+`
+)
+.join("");
+
+openModal(
+"Свой залог",
+`
+
+<div class="card">
+
+<div class="card-title">
+🐾 Введите своего питомца
+</div>
+
+<p class="card-subtitle">
+Если нужного питомца нет среди предложенных, укажи его название вручную.
+</p>
+
+</div>
+
+<div class="field">
+
+<label>
+Название питомца
+</label>
+
+<input
+id="customDepositName"
+type="text"
+maxlength="80"
+placeholder="Например: Turtle"
+autocomplete="off"
+>
+
+</div>
+
+<div class="field">
+
+<label>
+Вариант питомца
+</label>
+
+<div
+class="variants"
+id="customDepositVariants"
+>
+
+${variantButtons}
+
+</div>
+
+</div>
+
+<div class="trade-order">
+
+<strong>
+Порядок трейдов
+</strong>
+<br>
+
+1-й трейд — ты передаёшь этого питомца как залог.
+<br>
+
+2-й трейд — получаешь арендованного питомца.
+<br><br>
+
+Залог не оплачивается Stars.
+
+</div>
+
+<button
+class="primary-btn full-btn"
+onclick="confirmCustomDeposit()"
+>
+Подтвердить залог
+</button>
+
+`
+);
+
+}
+
+function selectCustomDepositVariant(
+variant,
+button
+){
+
+currentRentCustomDepositVariant=variant;
+
+document
+.querySelectorAll(
+"#customDepositVariants .variant"
+)
+.forEach(
+btn=>btn.classList.remove("active")
+);
+
+button.classList.add("active");
+
+}
+
+function confirmCustomDeposit(){
+
+const input=
+document.getElementById(
+"customDepositName"
+);
+
+if(!input){
+
+return;
+
+}
+
+const name=
+input.value.trim();
+
+if(!name){
+
+showToast(
+"Введи название питомца"
+);
+
+return;
+
+}
+
+if(
+currentRentPet&&
+name.toLowerCase()===
+currentRentPet.name.toLowerCase()
+){
+
+showToast(
+"Арендованный питомец не может быть залогом"
+);
+
+return;
+
+}
+
+currentRentDepositPet=null;
+
+currentRentCustomDeposit=true;
+
+currentRentCustomDepositName=name;
+
+currentRentCustomDepositEmoji="🐾";
+
+closeModal();
+
+renderRentDate();
+
+}
+
+function getCurrentDepositName(){
+
+if(currentRentCustomDeposit){
+
+return currentRentCustomDepositName;
+
+}
+
+return currentRentDepositPet?.name||"";
+
+}
+
+function getCurrentDepositEmoji(){
+
+if(currentRentCustomDeposit){
+
+return currentRentCustomDepositEmoji;
+
+}
+
+return currentRentDepositPet?.emoji||"🐾";
+
+}
+
+function getCurrentDepositVariant(){
+
+if(currentRentCustomDeposit){
+
+return currentRentCustomDepositVariant;
+
+}
+
+return currentRentDepositPet?.variant||"Normal";
+
+}
+
+function hasRentDeposit(){
+
+return !!(
+currentRentDepositPet||
+(
+currentRentCustomDeposit&&
+currentRentCustomDepositName
+)
+);
+
+}
+
+function nextDates(){
+
+const result=[];
+
+const now=
+new Date();
+
+for(
+let i=0;
+i<14;
+i++
+){
+
+const d=
+new Date(now);
+
+d.setDate(
+d.getDate()+i
+);
+
+result.push({
+
+iso:
+d.toISOString()
+.slice(0,10),
+
+label:
+d.toLocaleDateString(
+"ru-RU",
+{
+weekday:"short",
+day:"2-digit",
+month:"2-digit"
+}
+)
+
+});
+
+}
+
+return result;
+
+}
+
+function timeOptions(){
+
+return[
+"17:30",
+"17:35",
+"17:40",
+"17:45",
+"17:50",
+"17:55",
+"18:00"
+];
+
+}
+
+function renderRentDate(){
+
+if(!hasRentDeposit()){
+
+renderRentDepositPetPicker();
+
+return;
+
+}
+
+const dates=
+nextDates();
+
+const times=
+timeOptions();
+
+currentRentDate=
+dates[0].iso;
+
+currentRentTime=
+times[0];
+
+openModal(
+"Дата и время",
+`
+
+<div class="card">
+
+<div class="price-row">
+
+<span>
+Арендованный питомец
+</span>
+
+<strong>
+${currentRentPet.emoji}
+${escapeHtml(currentRentPet.name)}
+</strong>
+
+</div>
+
+<div class="price-row">
+
+<span>
+Вариант
+</span>
+
+<strong>
+${currentRentVariant}
+</strong>
+
+</div>
+
+<div class="price-row">
+
+<span>
+Цена аренды
+</span>
+
+<strong>
+${currentRentOffer.price} ⭐
+</strong>
+
+</div>
+
+</div>
+
+<div class="selected-deposit">
+
+<div class="pet-avatar">
+${getCurrentDepositEmoji()}
+</div>
+
+<div>
+
+<strong>
+Залог:
+${escapeHtml(getCurrentDepositName())}
+</strong>
+
+<span>
+${escapeHtml(getCurrentDepositVariant())} · Этот питомец передаётся владельцу в качестве залога.
+</span>
+
+</div>
+
+</div>
+
+<div class="trade-order">
+
+<strong>
+Порядок трейдов
+</strong>
+<br>
+
+1-й трейд — передаёшь выбранный залоговый питомец.
+<br>
+
+2-й трейд — получаешь арендованного питомца.
+<br><br>
+
+Стоимость аренды оплачивается отдельно в Telegram Stars.
+
+</div>
+
+<div class="field">
+
+<label>
+Дата передачи
+</label>
+
+<select
+id="rentDate"
+>
+${dates
+.map(
+d=>`
+
+<option value="${d.iso}">
+${d.label}
+</option>
+
+`
+)
+.join("")}
+</select>
+
+</div>
+
+<div class="field">
+
+<label>
+Время передачи
+</label>
+
+<select
+id="rentTime"
+>
+${times
+.map(
+t=>`
+
+<option value="${t}">
+${t}
+</option>
+
+`
+)
+.join("")}
+</select>
+
+</div>
+
+<div class="notice">
+
+Передача:
+${CONFIG.HANDOVER_FROM}–${CONFIG.HANDOVER_TO}
+по Москве.
+
+Шаг времени:
+${CONFIG.SLOT_MINUTES} минут.
+
+</div>
+
+<div class="checkbox-row">
+
+<input
+type="checkbox"
+id="depositAgree"
+>
+
+<label for="depositAgree">
+Я подтверждаю, что передам выбранного питомца-залога в первом трейде, после чего получу арендованного питомца во втором трейде, и верну арендованного питомца через 24 часа.
+</label>
+
+</div>
+
+<button
+class="primary-btn full-btn"
+onclick="continueRentConfirmation()"
+>
+Перейти к подтверждению
+</button>
+
+`
+);
+
+}
+
+function continueRentConfirmation(){
+
+if(
+!document
+.getElementById(
+"depositAgree"
+)?.checked
+){
+
+showToast(
+"Подтверди передачу питомца-залога"
+);
+
+return;
+
+}
+
+currentRentDate=
+document
+.getElementById(
+"rentDate"
+)
+?.value||
+currentRentDate;
+
+currentRentTime=
+document
+.getElementById(
+"rentTime"
+)
+?.value||
+currentRentTime;
+
+renderRentConfirmation();
+
+}
+
+function renderRentConfirmation(){
+
+openModal(
+"Подтверждение аренды",
+`
+
+<div class="success">
+
+<div class="success-icon">
+🐾
+</div>
+
+<h2>
+Проверь заявку
+</h2>
+
+<p>
+Проверь питомца, стоимость и питомца-залог.
+</p>
+
+</div>
+
+<div class="price-box">
+
+<div class="price-row">
+
+<span>
+Питомец
+</span>
+
+<strong>
+${currentRentPet.emoji}
+${escapeHtml(currentRentPet.name)}
+</strong>
+
+</div>
+
+<div class="price-row">
+
+<span>
+Вариант
+</span>
+
+<strong>
+${currentRentVariant}
+</strong>
+
+</div>
+
+<div class="price-row">
+
+<span>
+Дата
+</span>
+
+<strong>
+${formatDate(currentRentDate)}
+</strong>
+
+</div>
+
+<div class="price-row">
+
+<span>
+Время
+</span>
+
+<strong>
+${currentRentTime}
+</strong>
+
+</div>
+
+<div class="price-row">
+
+<span>
+Срок
+</span>
+
+<strong>
+24 часа
+</strong>
+
+</div>
+
+<div class="price-row price-total">
+
+<span>
+Стоимость аренды
+</span>
+
+<strong>
+${currentRentOffer.price} ⭐
+</strong>
+
+</div>
+
+</div>
+
+<div class="deposit-box">
+
+<div class="deposit-box-title">
+🐾 Питомец-залог
+</div>
+
+<div class="selected-deposit">
+
+<div class="pet-avatar">
+${getCurrentDepositEmoji()}
+</div>
+
+<div>
+
+<strong>
+${escapeHtml(getCurrentDepositName())}
+</strong>
+
+<span>
+Вариант: ${escapeHtml(getCurrentDepositVariant())}
+</span>
+
+<span>
+Передаётся владельцу арендованного питомца как залог.
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="trade-order">
+
+<strong>
+Порядок трейдов
+</strong>
+<br>
+
+1-й трейд — ты передаёшь питомца-залог владельцу.
+<br>
+
+2-й трейд — после передачи залога ты получаешь арендованного питомца.
+<br><br>
+
+После окончания аренды арендованный питомец возвращается владельцу,
+а залоговый питомец возвращается тебе согласно условиям аренды.
+
+</div>
+
+<div class="notice">
+
+⚠️ Залог НЕ оплачивается Stars.
+Залог — это выбранный тобой питомец.
+Стоимость в Stars относится только к аренде.
+
+</div>
+
+<button
+class="primary-btn full-btn"
+onclick="createRentApplication()"
+>
+Подтвердить аренду
+</button>
+
+`
+);
+
+}
+
+function createRentApplication(){
+
+if(
+!currentRentPet||
+!currentRentOffer||
+!hasRentDeposit()
+){
+
+showToast(
+"Заполни все данные"
+);
+
+return;
+
+}
+
+const user=
+getProfile();
+
+const application={
+
+id:
+generateId("rent"),
+
+type:"rent",
+
+status:"awaiting_payment",
+
+createdAt:
+new Date().toISOString(),
+
+petId:
+currentRentPet.id,
+
+petName:
+currentRentPet.name,
+
+petEmoji:
+currentRentPet.emoji,
+
+variant:
+currentRentVariant,
+
+seller:
+currentRentOffer.seller,
+
+offerId:
+currentRentOffer.id,
+
+price:
+currentRentOffer.price,
+
+depositType:"pet",
+
+depositPetId:
+currentRentCustomDeposit
+?
+"custom"
+:
+currentRentDepositPet.id,
+
+depositPetName:
+getCurrentDepositName(),
+
+depositPetEmoji:
+getCurrentDepositEmoji(),
+
+depositVariant:
+getCurrentDepositVariant(),
+
+depositCustom:
+currentRentCustomDeposit,
+
+tradeOrder:
+"1-й трейд — передача залога; 2-й трейд — получение арендованного питомца",
+
+date:
+currentRentDate,
+
+time:
+currentRentTime,
+
+rentalHours:24,
+
+invoiceUrl:"",
+
+telegramUserId:
+user.id,
+
+telegramUsername:
+user.username,
+
+telegramFirstName:
+user.firstName
+
+};
+
+applications.unshift(
+application
+);
+
+saveApplications();
+
+sendApplicationToBackend(
+application
+);
+
+showPaymentModal(
+application
+);
+
+}
+
+function showPaymentModal(
+application
+){
+
+openModal(
+"Заявка создана",
+`
+
+<div class="success">
+
+<div class="success-icon">
+✓
+</div>
+
+<h2>
+Заявка создана
+</h2>
+
+<p>
+Заявка №
+${escapeHtml(application.id)}
+</p>
+
+</div>
+
+<div class="price-box">
+
+<div class="price-row">
+
+<span>
+Питомец
+</span>
+
+<strong>
+${application.petEmoji}
+${escapeHtml(application.petName)}
+</strong>
+
+</div>
+
+<div class="price-row">
+
+<span>
+Вариант
+</span>
+
+<strong>
+${application.variant}
+</strong>
+
+</div>
+
+<div class="price-row">
+
+<span>
+Стоимость
+</span>
+
+<strong>
+${application.price} ⭐
+</strong>
+
+</div>
+
+<div class="price-row">
+
+<span>
+Срок
+</span>
+
+<strong>
+24 часа
+</strong>
+
+</div>
+
+</div>
+
+<div class="deposit-box">
+
+<div class="deposit-box-title">
+🐾 Залог питомцем
+</div>
+
+<div class="selected-deposit">
+
+<div class="pet-avatar">
+${application.depositPetEmoji}
+</div>
+
+<div>
+
+<strong>
+${escapeHtml(application.depositPetName)}
+</strong>
+
+<span>
+Вариант: ${escapeHtml(application.depositVariant||"Normal")}
+</span>
+
+<span>
+Этот питомец передаётся владельцу как залог.
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="trade-order">
+
+<strong>
+Порядок трейдов:</strong>
+<br>
+
+1-й трейд — передаёшь питомца-залог.
+<br>
+
+2-й трейд — получаешь арендованного питомца.
+<br><br>
+
+⭐ Stars оплачиваются только за аренду.
+
+</div>
+
+<div class="notice">
+
+Сначала оплачивается аренда в Telegram Stars.
+Перед получением арендованного питомца отдельно передаётся выбранный питомец-залог.
+
+</div>
+
+<button
+class="primary-btn full-btn"
+onclick="payForRent('${application.id}')"
+>
+⭐ Оплатить аренду
+</button>
+
+<button
+class="secondary-btn full-btn"
+style="margin-top:8px"
+onclick="showScreen('applications');closeModal()"
+>
+Мои заявки
+</button>
+
+`
+);
+
+}
+
+function payForRent(id){
+
+const application=
+applications.find(
+a=>a.id===id
+);
+
+if(!application){
+
+showToast(
+"Заявка не найдена"
+);
+
+return;
+
+}
+
+if(
+application.invoiceUrl&&
+tg&&
+typeof tg.openInvoice==="function"
+){
+
+tg.openInvoice(
+application.invoiceUrl,
+status=>{
+
+if(status==="paid"){
+
+updateApplicationStatus(
+application.id,
+"paid"
+);
+
+showToast(
+"Оплата прошла успешно"
+);
+
+}
+
+if(status==="cancelled"){
+
+showToast(
+"Оплата отменена"
+);
+
+}
+
+if(status==="failed"){
+
+showToast(
+"Ошибка оплаты"
+);
+
+}
+
+}
+);
+
+return;
+
+}
+
+showToast(
+"Invoice Telegram Stars ещё не получен"
+);
+
+}
+
+let currentSupplyPet=null;
+
+let currentSupplyVariant="Normal";
+
+let currentSupplyPrice=0;
+
+let currentSupplyRoblox="";
+
+let currentSupplyDate="";
+
+let currentSupplyTime="";
+
+function startSupply(){
+
+openModal(
+"Правила сдачи питомца",
+`
+
+<div class="rules">
+
+<h3>
+Условия для владельца
+</h3>
+
+<p>
+<strong>1. Питомец.</strong><br>
+Выбери питомца, которого готов предоставить в аренду.
+</p>
+
+<p>
+<strong>2. Своя цена.</strong><br>
+Ты самостоятельно устанавливаешь стоимость аренды в Telegram Stars.
+Цена не фиксируется сервисом.
+</p>
+
+<p>
+<strong>3. Залог.</strong><br>
+Ты НЕ устанавливаешь денежный залог и НЕ принимаешь Stars в качестве залога.
+Залог предоставляет арендатор в виде своего питомца.
+</p>
+
+<p>
+<strong>4. Срок.</strong><br>
+Стандартная аренда — 24 часа.
+</p>
+
+<p>
+<strong>5. Комиссия.</strong><br>
+Комиссия Adopt Rent составляет ${CONFIG.COMMISSION}% от стоимости аренды.
+</p>
+
+<p>
+<strong>6. Roblox.</strong><br>
+Для служебной передачи используется аккаунт
+${CONFIG.SUPPLIER_ROBLOX}.
+Пароль пользователя не требуется.
+</p>
+
+<p>
+<strong>7. Возврат.</strong><br>
+После окончания аренды арендованный питомец должен быть возвращён владельцу.
+</p>
+
+</div>
+
+<div class="notice">
+
+💰 Единственное значение, которое ты устанавливаешь сам в заявке, — цена аренды питомца.
+
+🐾 Залог выбирает арендатор и предоставляет в виде своего питомца.
+
+</div>
+
+<div class="checkbox-row">
+
+<input
+type="checkbox"
+id="supplyRulesAgree"
+>
+
+<label for="supplyRulesAgree">
+Я ознакомился(ась) с условиями сдачи питомца и понимаю, что цену устанавливаю я, а залог предоставляет арендатор своим питомцем.
+</label>
+
+</div>
+
+<button
+class="primary-btn full-btn"
+onclick="continueSupplyRules()"
+>
+Продолжить
+</button>
+
+`
+);
+
+}
+
+function continueSupplyRules(){
+
+if(
+!document
+.getElementById(
+"supplyRulesAgree"
+)?.checked
+){
+
+showToast(
+"Подтверди правила"
+);
+
+return;
+
+}
+
+renderSupplyPetPicker();
+
+}
+
+function renderSupplyPetPicker(
+query=""
+){
+
+const q=
+query
+.trim()
+.toLowerCase();
+
+const list=
+PETS.filter(
+p=>
+isSupplyPet(p)&&
+p.name
+.toLowerCase()
+.includes(q)
+);
+
+openModal(
+"Выберите питомца",
+`
+
+<input
+class="search"
+placeholder="Поиск питомца..."
+value="${escapeHtml(query)}"
+oninput="renderSupplySearch(this.value)"
+>
+
+<div
+class="pet-list"
+id="supplyPetList"
+>
+${renderPetOptions(
+list,
+"supply"
+)}
+</div>
+
+<!-- ДОБАВЛЕНО: свой питомец для сдачи -->
+
+<button
+type="button"
+class="custom-deposit-btn"
+onclick="openCustomSupplyPetModal()"
+>
+
+<div class="custom-deposit-btn-icon">
+＋
+</div>
+
+<div class="custom-deposit-btn-text">
+
+<strong>
+Ввести своего питомца
+</strong>
+
+<span>
+Если нужного питомца нет в списке
+</span>
+
+</div>
+
+</button>
+
+`
+);
+
+}
+
+function renderSupplySearch(
+query
+){
+
+const q=
+query
+.trim()
+.toLowerCase();
+
+const list=
+PETS.filter(
+p=>
+isSupplyPet(p)&&
+p.name
+.toLowerCase()
+.includes(q)
+);
+
+const box=
+document.getElementById(
+"supplyPetList"
+);
+
+if(box){
+
+box.innerHTML=
+renderPetOptions(
+list,
+"supply"
+);
+
+}
+
+}
+
+/* =========================================================
+СОБСТВЕННЫЙ ПИТОМЕЦ ДЛЯ СДАЧИ
+Добавлено только для возможности указать питомца,
+которого нет в списке.
+========================================================= */
+
+function openCustomSupplyPetModal(){
+
+const variants=[
+"Normal",
+"F",
+"R",
+"FR",
+"N",
+"NF",
+"NR",
+"NFR",
+"M",
+"MF",
+"MR",
+"MFR"
+];
+
+const variantButtons=
+variants
+.map(
+v=>`
+
+<button
+type="button"
+class="variant"
+onclick="selectCustomSupplyVariant('${v}',this)"
+>
+${v}
+</button>
+
+`
+)
+.join("");
+
+openModal(
+"Свой питомец",
+`
+
+<div class="card">
+
+<div class="card-title">
+🐾 Введите своего питомца
+</div>
+
+<p class="card-subtitle">
+Если нужного питомца нет в списке, укажи его название вручную.
+После этого выбери его вариант и установи свою цену аренды.
+</p>
+
+</div>
+
+<div class="field">
+
+<label>
+Название питомца
+</label>
+
+<input
+id="customSupplyPetName"
+type="text"
+maxlength="80"
+placeholder="Например: Unicorn"
+autocomplete="off"
+>
+
+</div>
+
+<div class="field">
+
+<label>
+Вариант питомца
+</label>
+
+<div
+class="variants"
+id="customSupplyVariants"
+>
+
+${variantButtons}
+
+</div>
+
+</div>
+
+<div class="notice">
+
+Ты самостоятельно указываешь название питомца,
+его вариант и цену аренды в следующем шаге.
+
+</div>
+
+<button
+class="primary-btn full-btn"
+onclick="confirmCustomSupplyPet()"
+>
+Продолжить
+</button>
+
+`
+);
+
+}
+
+function selectCustomSupplyVariant(
+variant,
+button
+){
+
+currentSupplyVariant=
+variant;
+
+document
+.querySelectorAll(
+"#customSupplyVariants .variant"
+)
+.forEach(
+btn=>btn.classList.remove("active")
+);
+
+button.classList.add("active");
+
+}
+
+function confirmCustomSupplyPet(){
+
+const input=
+document.getElementById(
+"customSupplyPetName"
+);
+
+if(!input){
+
+return;
+
+}
+
+const name=
+input.value.trim();
+
+if(!name){
+
+showToast(
+"Введи название питомца"
+);
+
+return;
+
+}
+
+currentSupplyPet={
+
+id:
+"custom_"+
+Date.now(),
+
+name:name,
+
+emoji:"🐾",
+
+value:999
+
+};
+
+if(!currentSupplyVariant){
+
+currentSupplyVariant=
+"Normal";
+
+}
+
+currentSupplyPrice=0;
+
+renderSupplyPrice();
+
+}
+
+function selectSupplyPet(
+id
+){
+
+const p=
+pet(id);
+
+if(
+!p||
+!isSupplyPet(p)
+){
+
+showToast(
+"Питомец недоступен"
+);
+
+return;
+
+}
+
+currentSupplyPet=p;
+
+currentSupplyVariant="Normal";
+
+currentSupplyPrice=0;
+
+renderSupplyVariant();
+
+}
+
+function renderSupplyVariant(){
+
+const p=
+currentSupplyPet;
+
+const variants=
+availableVariants(p);
+
+openModal(
+"Вариант питомца",
+`
+
+<div class="card">
+
+<div
+style="
+display:flex;
+align-items:center;
+gap:11px
+"
+>
+
+<div class="pet-avatar">
+${p.emoji}
+</div>
+
+<div>
+
+<strong>
+${escapeHtml(p.name)}
+</strong>
+
+<div class="muted">
+Выбери вариант
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="variants">
+
+${renderVariantButton(
+"Normal",
+"Обычный",
+variants,
+currentSupplyVariant,
+"supply"
+)}
+
+${renderVariantButton(
+"F",
+"F",
+variants,
+currentSupplyVariant,
+"supply"
+)}
+
+${renderVariantButton(
+"R",
+"R",
+variants,
+currentSupplyVariant,
+"supply"
+)}
+
+${renderVariantButton(
+"N",
+"N",
+variants,
+currentSupplyVariant,
+"supply"
+)}
+
+${renderVariantButton(
+"M",
+"M",
+variants,
+currentSupplyVariant,
+"supply"
+)}
+
+</div>
+
+<div class="notice">
+
+После выбора варианта ты сам укажешь цену аренды.
+Автоматическая цена не будет установлена вместо твоей.
+
+</div>
+
+<button
+class="primary-btn full-btn"
+onclick="renderSupplyPrice()"
+>
+Указать свою цену
+</button>
+
+`
+);
+
+}
+
+function setSupplyVariant(
+value
+){
+
+if(value==="F"){
+
+currentSupplyVariant=
+makeVariant(
+variantTier(
+currentSupplyVariant
+),
+!variantHasF(
+currentSupplyVariant
+),
+variantHasR(
+currentSupplyVariant
+)
+);
+
+}
+
+else if(value==="R"){
+
+currentSupplyVariant=
+makeVariant(
+variantTier(
+currentSupplyVariant
+),
+variantHasF(
+currentSupplyVariant
+),
+!variantHasR(
+currentSupplyVariant
+)
+);
+
+}
+
+else{
+
+currentSupplyVariant=
+makeVariant(
+value,
+variantHasF(
+currentSupplyVariant
+),
+variantHasR(
+currentSupplyVariant
+)
+);
+
+}
+
+renderSupplyVariant();
+
+}
+
+function renderSupplyPrice(){
+
+openModal(
+"Твоя цена",
+`
+
+<div class="card">
+
+<div
+style="
+display:flex;
+align-items:center;
+gap:10px
+"
+>
+
+<div class="pet-avatar">
+${currentSupplyPet.emoji}
+</div>
+
+<div>
+
+<strong>
+${escapeHtml(currentSupplyPet.name)}
+</strong>
+
+<div class="muted">
+${currentSupplyVariant}
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="field">
+
+<label>
+Стоимость аренды
+</label>
+
+<input
+id="supplyPrice"
+type="number"
+inputmode="numeric"
+min="${CONFIG.MIN_PRICE}"
+max="${CONFIG.MAX_PRICE}"
+step="1"
+placeholder="Например: 500"
+value="${currentSupplyPrice||""}"
+>
+
+<div
+class="muted"
+style="margin-top:6px"
+>
+Ты сам устанавливаешь цену: от ${CONFIG.MIN_PRICE} до ${CONFIG.MAX_PRICE} ⭐
+</div>
+
+</div>
+
+<div class="price-box">
+
+<div class="price-row">
+
+<span>
+Твоя цена
+</span>
+
+<strong id="pricePreview">
+0 ⭐
+</strong>
+
+</div>
+
+<div class="price-row">
+
+<span>
+Комиссия ${CONFIG.COMMISSION}%
+</span>
+
+<strong id="commissionPreview">
+0 ⭐
+</strong>
+
+</div>
+
+<div class="price-row price-total">
+
+<span>
+После комиссии
+</span>
+
+<strong id="payoutPreview">
+0 ⭐
+</strong>
+
+</div>
+
+</div>
+
+<div class="notice">
+
+🐾 Залог здесь не указывается.
+При аренде залог предоставляет сам арендатор в виде своего питомца.
+
+</div>
+
+<button
+class="primary-btn full-btn"
+onclick="continueSupplyPrice()"
+>
+Продолжить
+</button>
+
+`
+);
+
+const input=
+document.getElementById(
+"supplyPrice"
+);
+
+if(input){
+
+input.addEventListener(
+"input",
+updateSupplyPricePreview
+);
+
+updateSupplyPricePreview();
+
+}
+
+}
+
+function updateSupplyPricePreview(){
+
+const input=
+document.getElementById(
+"supplyPrice"
+);
+
+if(!input)return;
+
+const value=
+normalizeInteger(
+input.value,
+0
+);
+
+const commission=
+Math.round(
+value*
+CONFIG.COMMISSION/
+100
+);
+
+const payout=
+value-
+commission;
+
+document
+.getElementById(
+"pricePreview"
+)
+.textContent=
+value+
+" ⭐";
+
+document
+.getElementById(
+"commissionPreview"
+)
+.textContent=
+commission+
+" ⭐";
+
+document
+.getElementById(
+"payoutPreview"
+)
+.textContent=
+payout+
+" ⭐";
+
+}
+
+function continueSupplyPrice(){
+
+const value=
+normalizeInteger(
+document
+.getElementById(
+"supplyPrice"
+)
+?.value,
+0
+);
+
+if(
+value<
+CONFIG.MIN_PRICE||
+value>
+CONFIG.MAX_PRICE
+){
+
+showToast(
+`Укажи цену от ${CONFIG.MIN_PRICE} до ${CONFIG.MAX_PRICE} ⭐`
+);
+
+return;
+
+}
+
+currentSupplyPrice=value;
+
+renderSupplyRoblox();
+
+}
+
+function renderSupplyRoblox(){
+
+openModal(
+"Roblox",
+`
+
+<div class="card">
+
+<h3 class="card-title">
+Передача питомца
+</h3>
+
+<p class="card-subtitle">
+
+Служебный Roblox-аккаунт:
+
+<strong style="color:#aaa4ff">
+${CONFIG.SUPPLIER_ROBLOX}
+</strong>
+
+<br><br>
+
+Пароль от твоего аккаунта не нужен.
+
+</p>
+
+</div>
+
+<div class="price-box">
+
+<div class="price-row">
+
+<span>
+Твоя цена
+</span>
+
+<strong>
+${currentSupplyPrice} ⭐
+</strong>
+
+</div>
+
+<div class="price-row">
+
+<span>
+Комиссия
+</span>
+
+<strong>
+${Math.round(
+currentSupplyPrice*
+CONFIG.COMMISSION/
+100
+)} ⭐
+</strong>
+
+</div>
+
+<div class="price-row price-total">
+
+<span>
+После комиссии
+</span>
+
+<strong>
+${calculatePayout(
+currentSupplyPrice
+)} ⭐
+</strong>
+
+</div>
+
+</div>
+
+<div class="field">
+
+<label>
+Roblox username
+</label>
+
+<input
+id="supplyRoblox"
+maxlength="30"
+placeholder="Например: MyUsername123"
+>
+
+</div>
+
+<button
+class="primary-btn full-btn"
+onclick="continueSupplyRoblox()"
+>
+Продолжить
+</button>
+
+`
+);
+
+}
+
+function continueSupplyRoblox(){
+
+const value=
+document
+.getElementById(
+"supplyRoblox"
+)
+?.value
+.trim();
+
+if(!value){
+
+showToast(
+"Укажи Roblox username"
+);
+
+return;
+
+}
+
+currentSupplyRoblox=value;
+
+renderSupplyDate();
+
+}
+
+function renderSupplyDate(){
+
+const dates=
+nextDates();
+
+const times=
+timeOptions();
+
+openModal(
+"Дата передачи",
+`
+
+<div class="price-box">
+
+<div class="price-row">
+
+<span>
+Питомец
+</span>
+
+<strong>
+${currentSupplyPet.emoji}
+${escapeHtml(currentSupplyPet.name)}
+</strong>
+
+</div>
+
+<div class="price-row">
+
+<span>
+Вариант
+</span>
+
+<strong>
+${currentSupplyVariant}
+</strong>
+
+</div>
+
+<div class="price-row">
+
+<span>
+Цена
+</span>
+
+<strong>
+${currentSupplyPrice} ⭐
+</strong>
+
+</div>
+
+</div>
+
+<div class="field">
+
+<label>
+Дата
+</label>
+
+<select id="supplyDate">
+
+${dates
+.map(
+d=>`
+
+<option value="${d.iso}">
+${d.label}
+</option>
+
+`
+)
+.join("")}
+
+</select>
+
+</div>
+
+<div class="field">
+
+<label>
+Время
+</label>
+
+<select id="supplyTime">
+
+${times
+.map(
+t=>`
+
+<option value="${t}">
+${t}
+</option>
+
+`
+)
+.join("")}
+
+</select>
+
+</div>
+
+<div class="notice">
+
+Передача:
+${CONFIG.HANDOVER_FROM}–${CONFIG.HANDOVER_TO}
+по Москве.
+
+</div>
+
+<button
+class="primary-btn full-btn"
+onclick="continueSupplyDate()"
+>
+Проверить заявку
+</button>
+
+`
+);
+
+}
+
+function continueSupplyDate(){
+
+currentSupplyDate=
+document
+.getElementById(
+"supplyDate"
+)
+?.value||
+"";
+
+currentSupplyTime=
+document
+.getElementById(
+"supplyTime"
+)
+?.value||
+"";
+
+renderSupplyReview();
+
+}
+
+function renderSupplyReview(){
+
+const commission=
+Math.round(
+currentSupplyPrice*
+CONFIG.COMMISSION/
+100
+);
+
+const payout=
+currentSupplyPrice-
+commission;
+
+openModal(
+"Проверка заявки",
+`
+
+<div class="card">
+
+<div
+style="
+display:flex;
+align-items:center;
+gap:10px
+"
+>
+
+<div class="pet-avatar">
+${currentSupplyPet.emoji}
+</div>
+
+<div>
+
+<strong>
+${escapeHtml(currentSupplyPet.name)}
+</strong>
+
+<div class="muted">
+${currentSupplyVariant}
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="price-box">
+
+<div class="price-row">
+
+<span>
+Roblox
+</span>
+
+<strong>
+${escapeHtml(currentSupplyRoblox)}
+</strong>
+
+</div>
+
+<div class="price-row">
+
+<span>
+Дата
+</span>
+
+<strong>
+${formatDate(currentSupplyDate)}
+</strong>
+
+</div>
+
+<div class="price-row">
+
+<span>
+Время
+</span>
+
+<strong>
+${currentSupplyTime}
+</strong>
+
+</div>
+
+<div class="price-row">
+
+<span>
+Твоя цена
+</span>
+
+<strong>
+${currentSupplyPrice} ⭐
+</strong>
+
+</div>
+
+<div class="price-row">
+
+<span>
+Комиссия
+</span>
+
+<strong>
+-${commission} ⭐
+</strong>
+
+</div>
+
+<div class="price-row price-total">
+
+<span>
+Выплата
+</span>
+
+<strong>
+${payout} ⭐
+</strong>
+
+</div>
+
+</div>
+
+<div class="notice">
+
+🐾 Залог не устанавливается владельцем.
+При аренде арендатор сам предоставляет другой питомец в качестве залога.
+
+</div>
+
+<button
+class="primary-btn full-btn"
+onclick="createSupplyApplication()"
+>
+Отправить заявку
+</button>
+
+`
+);
+
+}
+
+function createSupplyApplication(){
+
+const user=
+getProfile();
+
+const commission=
+Math.round(
+currentSupplyPrice*
+CONFIG.COMMISSION/
+100
+);
+
+const application={
+
+id:
+generateId("supply"),
+
+type:"supply",
+
+status:"review",
+
+createdAt:
+new Date().toISOString(),
+
+petId:
+currentSupplyPet.id,
+
+petName:
+currentSupplyPet.name,
+
+petEmoji:
+currentSupplyPet.emoji,
+
+variant:
+currentSupplyVariant,
+
+robloxUsername:
+currentSupplyRoblox,
+
+serviceRoblox:
+CONFIG.SUPPLIER_ROBLOX,
+
+date:
+currentSupplyDate,
+
+time:
+currentSupplyTime,
+
+price:
+currentSupplyPrice,
+
+rentalPrice:
+currentSupplyPrice,
+
+commission:
+CONFIG.COMMISSION,
+
+commissionAmount:
+commission,
+
+estimatedPayout:
+currentSupplyPrice-
+commission,
+
+depositType:"pet",
+
+telegramUserId:
+user.id,
+
+telegramUsername:
+user.username,
+
+telegramFirstName:
+user.firstName
+
+};
+
+applications.unshift(
+application
+);
+
+saveApplications();
+
+sendApplicationToBackend(
+application
+);
+
+openModal(
+"Заявка отправлена",
+`
+
+<div class="success">
+
+<div class="success-icon">
+✓
+</div>
+
+<h2>
+Заявка отправлена
+</h2>
+
+<p>
+Заявка №
+${escapeHtml(application.id)}
+передана на проверку.
+</p>
+
+</div>
+
+<div class="price-box">
+
+<div class="price-row">
+
+<span>
+Питомец
+</span>
+
+<strong>
+${application.petEmoji}
+${escapeHtml(application.petName)}
+</strong>
+
+</div>
+
+<div class="price-row">
+
+<span>
+Твоя цена
+</span>
+
+<strong>
+${application.price} ⭐
+</strong>
+
+</div>
+
+<div class="price-row">
+
+<span>
+Комиссия
+</span>
+
+<strong>
+${application.commissionAmount} ⭐
+</strong>
+
+</div>
+
+<div class="price-row price-total">
+
+<span>
+Выплата
+</span>
+
+<strong>
+${application.estimatedPayout} ⭐
+</strong>
+
+</div>
+
+</div>
+
+<div class="notice">
+
+🐾 Залогом при аренде будет питомец арендатора.
+Ты не устанавливаешь денежный залог.
+
+</div>
+
+<button
+class="primary-btn full-btn"
+onclick="showScreen('applications');closeModal()"
+>
+Мои заявки
+</button>
+
+`
+);
+
+}
+
+function renderApplications(){
+
+const box=
+document.getElementById(
+"applicationsList"
+);
+
+const count=
+document.getElementById(
+"applicationCount"
+);
+
+if(count){
+
+count.textContent=
+applications.length;
+
+}
+
+if(!applications.length){
+
+box.innerHTML=`
+
+<div class="empty">
+
+<div class="empty-icon">
+📋
+</div>
+
+Заявок пока нет.
+
+</div>
+
+`;
+
+return;
+
+}
+
+box.innerHTML=
+applications
+.map(
+renderApplication
+)
+.join("");
+
+}
+
+function renderApplication(a){
+
+const status=
+getStatusInfo(
+a.status
+);
+
+const type=
+a.type==="rent"
+?
+"Аренда"
+:
+"Сдача";
+
+let deposit="";
+
+if(
+a.type==="rent"&&
+a.depositPetName
+){
+
+deposit=`
+
+<div class="deposit-pet">
+
+<div class="deposit-pet-icon">
+${a.depositPetEmoji}
+</div>
+
+<div class="deposit-pet-text">
+
+<strong>
+Залог: ${escapeHtml(a.depositPetName)}
+</strong>
+
+<span>
+${escapeHtml(a.depositVariant||"Normal")} · Питомец передаётся владельцу до получения аренды
+</span>
+
+</div>
+
+</div>
+
+<div class="trade-order">
+
+<strong>
+Порядок трейдов:
+</strong>
+
+1-й — передача залога.
+2-й — получение арендованного питомца.
+
+</div>
+
+`;
+
+}
+
+let payment="";
+
+if(
+a.type==="rent"&&
+(
+a.status==="awaiting_payment"||
+a.status==="payment_pending"
+)
+){
+
+payment=`
+
+<button
+class="primary-btn full-btn"
+style="margin-top:9px"
+onclick="payForRent('${a.id}')"
+>
+⭐ Оплатить аренду
+</button>
+
+`;
+
+}
+
+return`
+
+<div class="application">
+
+<div class="application-top">
+
+<div class="application-pet">
+
+<div class="pet-avatar">
+${a.petEmoji||"🐾"}
+</div>
+
+<div class="pet-name">
+
+<strong>
+${escapeHtml(a.petName||"Питомец")}
+</strong>
+
+<span>
+${type}
+·
+${escapeHtml(a.variant||"Normal")}
+</span>
+
+</div>
+
+</div>
+
+<div class="status ${status.class}">
+${status.text}
+</div>
+
+</div>
+
+<div class="application-details">
+
+<div class="detail">
+
+<span>
+Дата
+</span>
+
+<strong>
+${formatDate(a.date)}
+</strong>
+
+</div>
+
+<div class="detail">
+
+<span>
+Время
+</span>
+
+<strong>
+${a.time||"—"}
+</strong>
+
+</div>
+
+<div class="detail">
+
+<span>
+Стоимость
+</span>
+
+<strong>
+${a.price||0} ⭐
+</strong>
+
+</div>
+
+<div class="detail">
+
+<span>
+${a.type==="rent"?"Срок":"Выплата"}
+</span>
+
+<strong>
+${a.type==="rent"?"24 часа":(a.estimatedPayout||0)+" ⭐"}
+</strong>
+
+</div>
+
+</div>
+
+${deposit}
+
+${payment}
+
+</div>
+
+`;
+
+}
+
+function getStatusInfo(
+status
+){
+
+if(
+status==="awaiting_payment"||
+status==="payment_pending"
+){
+
+return{
+text:"Ожидает оплаты",
+class:"waiting"
+};
+
+}
+
+if(status==="paid"){
+
+return{
+text:"Оплачено",
+class:"paid"
+};
+
+}
+
+if(status==="review"){
+
+return{
+text:"На проверке",
+class:"review"
+};
+
+}
+
+if(status==="available"){
+
+return{
+text:"Доступен",
+class:"paid"
+};
+
+}
+
+if(status==="completed"){
+
+return{
+text:"Завершено",
+class:"completed"
+};
+
+}
+
+if(status==="cancelled"){
+
+return{
+text:"Отменено",
+class:"cancelled"
+};
+
+}
+
+return{
+text:"Обрабатывается",
+class:"review"
+};
+
+}
+
+function updateApplicationStatus(
+id,
+status
+){
+
+const application=
+applications.find(
+a=>a.id===id
+);
+
+if(!application)return;
+
+application.status=status;
+
+application.updatedAt=
+new Date().toISOString();
+
+saveApplications();
+
+sendApplicationToBackend(
+application
+);
+
+}
+
+function renderProfile(){
+
+const user=
+getProfile();
+
+const name=
+[
+user.firstName,
+user.lastName
+]
+.filter(Boolean)
+.join(" ")
+||
+"Пользователь";
+
+document
+.getElementById(
+"profileName"
+)
+.textContent=
+name;
+
+document
+.getElementById(
+"profileUsername"
+)
+.textContent=
+user.username
+?
+"@"+user.username
+:
+"Telegram";
+
+document
+.getElementById(
+"profileAvatar"
+)
+.textContent=
+(
+user.firstName||
+"U"
+)
+.charAt(0)
+.toUpperCase();
+
+document
+.getElementById(
+"profileTelegram"
+)
+.textContent=
+user.id
+?
+"Telegram ID: "+user.id
+:
+"Открой приложение через Telegram.";
+
+document
+.getElementById(
+"statRent"
+)
+.textContent=
+applications
+.filter(
+a=>a.type==="rent"
+)
+.length;
+
+document
+.getElementById(
+"statSupply"
+)
+.textContent=
+applications
+.filter(
+a=>a.type==="supply"
+)
+.length;
+
+document
+.getElementById(
+"statCompleted"
+)
+.textContent=
+applications
+.filter(
+a=>a.status==="completed"
+)
+.length;
+
+}
+
+function openSupport(){
+
+const url=
+"https://t.me/"+
+CONFIG.SUPPORT_BOT;
+
+try{
+
+if(tg?.openTelegramLink){
+
+tg.openTelegramLink(url);
+
+return;
+
+}
+
+}catch(e){
+
+console.log(e);
+
+}
+
+window.open(
+url,
+"_blank"
+);
+
+}
+
+async function sendApplicationToBackend(
+application
+){
+
+try{
+
+await fetch(
+CONFIG.FORM_ENDPOINT,
+{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json",
+"Accept":"application/json"
+},
+
+body:
+JSON.stringify(
+application
+)
+
+}
+);
+
+}catch(e){
+
+console.log(
+"Form error:",
+e
+);
+
+}
+
+}
+
+function normalizeInteger(
+value,
+fallback=0
+){
+
+const number=
+Number(value);
+
+if(
+!Number.isFinite(number)
+){
+
+return fallback;
+
+}
+
+return Math.floor(number);
+
+}
+
+function calculatePayout(
+price
+){
+
+const value=
+normalizeInteger(
+price,
+0
+);
+
+return Math.round(
+value*
+(
+1-
+CONFIG.COMMISSION/100
+)
+);
+
+}
+
+function formatDate(
+value
+){
+
+if(!value)return"—";
+
+const p=
+value.split("-");
+
+if(p.length===3){
+
+return[
+p[2],
+p[1],
+p[0]
+].join(".");
+
+}
+
+return value;
+
+}
+
+function escapeHtml(
+value
+){
+
+if(
+value===null||
+value===undefined
+){
+
+return"";
+
+}
+
+return String(value)
+
+.replaceAll(
+"&",
+"&amp;"
+)
+
+.replaceAll(
+"<",
+"&lt;"
+)
+
+.replaceAll(
+">",
+"&gt;"
+)
+
+.replaceAll(
+'"',
+"&quot;"
+)
+
+.replaceAll(
+"'",
+"&#039;"
+);
+
+}
+
+window.AdoptRent={
+
+setInvoice:function(
+id,
+invoiceUrl
+){
+
+const a=
+applications.find(
+x=>x.id===id
+);
+
+if(!a)return false;
+
+a.invoiceUrl=
+invoiceUrl;
+
+a.status=
+"payment_pending";
+
+saveApplications();
+
+return true;
+
+},
+
+setStatus:function(
+id,
+status
+){
+
+updateApplicationStatus(
+id,
+status
+);
+
+return true;
+
+},
+
+reload:function(){
+
+applications=
+loadApplications();
+
+renderApplications();
+
+renderProfile();
+
+},
+
+getApplications:function(){
+
+return JSON.parse(
+JSON.stringify(
+applications
+)
+);
+
+}
+
+};
+
+document
+.getElementById(
+"overlay"
+)
+.addEventListener(
+"click",
+function(e){
+
+if(e.target===this){
+
+closeModal();
+
+}
+
+}
+);
+
+document.addEventListener(
+"keydown",
+function(e){
+
+if(e.key==="Escape"){
+
+closeModal();
+
+}
+
+}
+);
+
+renderApplications();
+
+renderProfile();
+
+updateOnline();
+
+</script>
+
+</body>
+</html>
